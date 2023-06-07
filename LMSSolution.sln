@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMSSolution.Data", "LMSSolution.Data\LMSSolution.Data.csproj", "{BAC7824E-9E30-4CC3-8DC7-8F591EDD618B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMSSolution.Application", "LMSSolution.Application\LMSSolution.Application.csproj", "{06A40917-005A-4FE6-9173-6D057CB75EB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{D498603C-358C-4B78-BB97-AA9A0CE4DDF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D498603C-358C-4B78-BB97-AA9A0CE4DDF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D498603C-358C-4B78-BB97-AA9A0CE4DDF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAC7824E-9E30-4CC3-8DC7-8F591EDD618B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC7824E-9E30-4CC3-8DC7-8F591EDD618B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC7824E-9E30-4CC3-8DC7-8F591EDD618B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC7824E-9E30-4CC3-8DC7-8F591EDD618B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06A40917-005A-4FE6-9173-6D057CB75EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06A40917-005A-4FE6-9173-6D057CB75EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06A40917-005A-4FE6-9173-6D057CB75EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06A40917-005A-4FE6-9173-6D057CB75EB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
