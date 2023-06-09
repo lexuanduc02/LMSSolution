@@ -17,7 +17,7 @@ namespace LMSSolution.Data.Configurations
             builder.Property(x => x.StartDate).IsRequired();
             builder.Property(x => x.EndDate).IsRequired();
 
-            builder.HasOne(s => s.Subject).WithMany(c => c.CreditClasses).HasForeignKey(c => c.SubjectId);
+            builder.HasOne(s => s.Subject).WithMany(c => c.CreditClasses).HasForeignKey(c => c.SubjectId).OnDelete(DeleteBehavior.ClientNoAction);
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace LMSSolution.Data.Enum
 {
-    public enum LessonStatus
+    public enum GenderEnum
     {
-        Study, 
-        Off
+        Female,
+        Male,
     }
 }

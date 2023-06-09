@@ -19,10 +19,10 @@ namespace LMSSolution.Data.Configurations
             builder.Property(x => x.Id).UseIdentityColumn();
 
             builder.Property(x => x.Date).IsRequired();
-            builder.Property(x => x.Shiff).IsRequired();
 
-            builder.HasOne(e => e.Subject).WithMany(s => s.Examinations).HasForeignKey(s => s.SubjectId);
-            builder.HasOne(e => e.ExamineMethod).WithMany(em => em.Examinations).HasForeignKey(s => s.ExamineMethodId);
+            builder.HasOne(e => e.Subject).WithMany(s => s.Examinations).HasForeignKey(e => e.SubjectId).OnDelete(DeleteBehavior.ClientNoAction);
+            builder.HasOne(e => e.ExamineMethod).WithMany(em => em.Examinations).HasForeignKey(e => e.ExamineMethodId).OnDelete(DeleteBehavior.ClientNoAction);
+            builder.HasOne(e => e.StudyShiff).WithMany(ss => ss.Examinations).HasForeignKey(e => e.StudyShiffId).OnDelete(DeleteBehavior.ClientNoAction);
         }
     }
 }

@@ -11,12 +11,17 @@ namespace LMSSolution.Data.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public StudyShiff Shiff { get; set; }
+
+        public int StudyShiffId { get; set; }
+        public StudyShiff StudyShiff { get; set; }
 
         public int SubjectId { get; set; }
         public Subject Subject { get; set; }
 
         public int ExamineMethodId { get; set; }
         public ExamineMethod ExamineMethod { get; set; }
+
+        public ICollection<TeacherExamination> TeacherExaminations { get; set; } = new List<TeacherExamination>();
+        public ICollection<StudentExamination> StudentExaminations { get; set; } = new List<StudentExamination>(); 
     }
 }

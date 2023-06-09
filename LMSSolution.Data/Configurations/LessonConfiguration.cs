@@ -20,10 +20,11 @@ namespace LMSSolution.Data.Configurations
             builder.Property(x => x.Id).UseIdentityColumn();
 
             builder.Property(x => x.Date).IsRequired();
-            builder.Property(x => x.Shiff).IsRequired();
-            builder.Property(x => x.Status).IsRequired().HasDefaultValue(LessonStatus.Study);
+            builder.Property(x => x.Status).IsRequired().HasDefaultValue(LessonStatusEnum.Study);
 
-            builder.HasOne(l => l.CreditClass).WithMany(c => c.Lessons).HasForeignKey(c => c.CreditClassId);
+            builder.HasOne(l => l.CreditClass).WithMany(c => c.Lessons).HasForeignKey(c => c.CreditClassId).OnDelete(DeleteBehavior.ClientNoAction);
+            builder.HasOne(l => l.Teacher).WithMany(u => u.Lessons).HasForeignKey(x => x.TeacherId).OnDelete(DeleteBehavior.ClientNoAction);
+            builder.HasOne(l => l.StudyShiff).WithMany(ss => ss.Lessons).HasForeignKey(x => x.StadyShiffId).OnDelete(DeleteBehavior.ClientNoAction);
         }
     }
 }

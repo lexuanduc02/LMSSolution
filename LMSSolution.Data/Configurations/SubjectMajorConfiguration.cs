@@ -12,8 +12,8 @@ namespace LMSSolution.Data.Configurations
 
             builder.HasKey(x => new { x.SubjectId, x.MajorId });
 
-            builder.HasOne(sm => sm.Subject).WithMany(s => s.SubjectMajors).HasForeignKey(sm => sm.SubjectId);
-            builder.HasOne(sm => sm.Major).WithMany(m => m.SubjectMajors).HasForeignKey(sm => sm.MajorId);
+            builder.HasOne(sm => sm.Subject).WithMany(s => s.SubjectMajors).HasForeignKey(sm => sm.SubjectId).OnDelete(DeleteBehavior.ClientNoAction);
+            builder.HasOne(sm => sm.Major).WithMany(m => m.SubjectMajors).HasForeignKey(sm => sm.MajorId).OnDelete(DeleteBehavior.ClientNoAction);
         }
     }
 }

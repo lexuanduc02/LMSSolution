@@ -14,5 +14,6 @@ namespace LMSSolution.Data.Entities
 
         public ICollection<Class> Classes { get; set; }
         public ICollection<SubjectMajor> SubjectMajors { get; set; } = new List<SubjectMajor>();
+        public ICollection<User> Students { get; set; } = new List<User>();
     }
 }

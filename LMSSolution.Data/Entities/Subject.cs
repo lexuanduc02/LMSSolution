@@ -15,5 +15,7 @@ namespace LMSSolution.Data.Entities
         public ICollection<CreditClass> CreditClasses { get; set; } = new List<CreditClass>();
         public ICollection<SubjectMajor> SubjectMajors { get; set; } = new List<SubjectMajor>();
         public ICollection<Examination> Examinations { get; set; } = new List<Examination>();
+        public ICollection<TeacherSubject> TeacherSubjects { get; set; } = new List<TeacherSubject>();
+
     }
 }

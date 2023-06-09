@@ -11,10 +11,15 @@ namespace LMSSolution.Data.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public StudyShiff Shiff { get; set; }
-        public LessonStatus Status { get; set; }
+        public LessonStatusEnum Status { get; set; }
+
+        public int StadyShiffId { get; set; }
+        public StudyShiff StudyShiff { get; set; }
 
         public int CreditClassId { get; set; }
         public CreditClass CreditClass { get; set; }
+
+        public Guid TeacherId { get; set; }
+        public User Teacher { get; set; }
     }
 }
