@@ -1,5 +1,6 @@
 ﻿using LMSSolution.Data.Configurations;
 using LMSSolution.Data.Entities;
+using LMSSolution.Data.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace LMSSolution.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Configure using FluentApi
             modelBuilder.ApplyConfiguration(new AttendanceConfiguration());
             modelBuilder.ApplyConfiguration(new ClassConfiguration());
             modelBuilder.ApplyConfiguration(new CourseConfiguration());
@@ -56,6 +58,9 @@ namespace LMSSolution.Data.EF
                 entity.ToTable("UserTokens");
                 entity.HasKey(x => x.UserId);
             });
+
+            //Seeding Data
+            modelBuilder.Seed();
         }
 
         public DbSet<Attendance> Attendances { get; set; }

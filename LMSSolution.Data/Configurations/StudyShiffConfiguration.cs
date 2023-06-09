@@ -16,6 +16,7 @@ namespace LMSSolution.Data.Configurations
             builder.ToTable("StudyShiffs");
 
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Description).IsRequired(false);
 
             builder.Property(x => x.StartAt).IsRequired();
             builder.Property(x => x.EndAt).IsRequired();
