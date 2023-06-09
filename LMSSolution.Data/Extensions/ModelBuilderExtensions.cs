@@ -22,8 +22,8 @@ namespace LMSSolution.Data.Extensions
             modelBuilder.Entity<Role>().HasData(new Role
             {
                 Id = new Guid("E029D545-0A04-4088-B156-0F1AFA8EF68B"),
-                Name = "ministry",
-                NormalizedName = "ministry"
+                Name = "officer",
+                NormalizedName = "officer"
             });
             modelBuilder.Entity<Role>().HasData(new Role
             {

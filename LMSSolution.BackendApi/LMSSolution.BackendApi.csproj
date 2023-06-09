@@ -1,20 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Catalog\" />
-    <Folder Include="System\Students\" />
-    <Folder Include="System\Teachers\" />
-    <Folder Include="System\Roles\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\LMSSolution.Application\LMSSolution.Application.csproj" />
     <ProjectReference Include="..\LMSSolution.Data\LMSSolution.Data.csproj" />
+    <ProjectReference Include="..\LMSSolution.Utilities\LMSSolution.Utilities.csproj" />
     <ProjectReference Include="..\LMSSolution.ViewModel\LMSSolution.ViewModels.csproj" />
   </ItemGroup>
 
