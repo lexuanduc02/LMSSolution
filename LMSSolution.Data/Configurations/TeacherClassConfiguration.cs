@@ -18,6 +18,7 @@ namespace LMSSolution.Data.Configurations
             builder.HasKey(x => new { x.TeacherId, x.ClassId });
 
             builder.Property(x => x.Description).HasMaxLength(200);
+            builder.Property(x => x.Description).IsRequired(false);
 
             builder.HasOne(tc => tc.Class).WithMany(c => c.TeacherClasses).HasForeignKey(x => x.ClassId).OnDelete(DeleteBehavior.ClientNoAction);
             builder.HasOne(tc => tc.Teacher).WithMany(u => u.TeacherClasses).HasForeignKey(x => x.TeacherId).OnDelete(DeleteBehavior.ClientNoAction);

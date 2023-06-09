@@ -16,6 +16,7 @@ namespace LMSSolution.Data.Configurations
             builder.ToTable("StudentExamination");
 
             builder.HasKey(x => new { x.StudentId, x.ExaminationId });
+            builder.Property(x => x.Description).IsRequired(false);
 
             builder.HasOne(se => se.Student).WithMany(u => u.StudentExaminations).HasForeignKey(x => x.StudentId).OnDelete(DeleteBehavior.ClientNoAction);
             builder.HasOne(se => se.Examination).WithMany(e => e.StudentExaminations).HasForeignKey(x => x.ExaminationId).OnDelete(DeleteBehavior.ClientNoAction);

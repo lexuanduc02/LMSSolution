@@ -17,6 +17,7 @@ namespace LMSSolution.Data.Configurations
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
+            builder.Property(x => x.Description).IsRequired(false);
 
             builder.Property(x => x.Name).IsRequired();
         }

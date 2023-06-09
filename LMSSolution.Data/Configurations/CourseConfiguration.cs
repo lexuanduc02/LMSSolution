@@ -21,6 +21,7 @@ namespace LMSSolution.Data.Configurations
             builder.Property(x => x.Name).IsRequired().HasMaxLength(10);
             builder.Property(x => x.StartDate).IsRequired();
             builder.Property(x => x.EndDate).IsRequired();
+            builder.Property(x => x.Description).IsRequired(false);
         }
     }
 }
