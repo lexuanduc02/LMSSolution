@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LMSSolution.Application\LMSSolution.Application.csproj" />
     <ProjectReference Include="..\LMSSolution.Data\LMSSolution.Data.csproj" />
     <ProjectReference Include="..\LMSSolution.Utilities\LMSSolution.Utilities.csproj" />
