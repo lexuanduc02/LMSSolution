@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LMSSolution.Data\LMSSolution.Data.csproj" />
+    <ProjectReference Include="..\LMSSolution.Utilities\LMSSolution.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

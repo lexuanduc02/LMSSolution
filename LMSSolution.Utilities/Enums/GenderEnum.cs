@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMSSolution.Data.Enum
+namespace LMSSolution.Utilities.Enums
 {
     public enum GenderEnum
     {
         Female,
         Male,
-        Unknown
+        Unknown,
     }
 }

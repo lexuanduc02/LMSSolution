@@ -1,5 +1,8 @@
+using LMSSolution.Application.Auth;
 using LMSSolution.Data.EF;
+using LMSSolution.Data.Entities;
 using LMSSolution.Utilities.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,16 @@ builder.Services.AddDbContext<LMSDbContext>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+
+    //Add Identity
+builder.Services.AddIdentity<User, Role>()
+    .AddEntityFrameworkStores<LMSDbContext>()
+    .AddDefaultTokenProviders();
+
+    //Declare DI
+builder.Services.AddTransient<UserManager<User>, UserManager<User>>();
+builder.Services.AddTransient<SignInManager<User>, SignInManager<User>>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 
 var app = builder.Build();
 
