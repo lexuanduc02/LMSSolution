@@ -33,14 +33,14 @@
                         <div class="card-body p-4">
                             <div class="text-center w-75 m-auto">
                                 <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Sign In</h4>
-                                <p class="text-muted mb-4">Enter your email address and password to access admin panel.</p>
+                                <p class="text-muted mb-3">Enter your email address and password to access admin panel.</p>
                             </div>
                             <form asp-action="Login" asp-controller="Auth">
                                 <input type="hidden" asp-for="ReturnUrl" value="@(Context.Request.Query["ReturnUrl"])">
-                                <div asp-validation-summary="All" class="text-danger"></div>
                                 <div class="form-group">
                                     <label asp-for="Email">Email address</label>
-                                    <input class="form-control" type="text" asp-for="Email" required="" placeholder="Enter your email">
+                                    <input type="text" class="form-control" asp-for="Email" placeholder="Enter your email">
+                                    <div class="mt-1"><span asp-validation-for="Email" class="text-danger"></span></div>
                                 </div>
                                 <div class="form-group">
                                     <a href="pages-recoverpw.html" class="text-muted float-right"><small>Forgot your password?</small></a>
@@ -53,10 +53,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="mt-1"><span asp-validation-for="Password" class="text-danger"></span></div>
                                 </div>
+                                @if (TempData["LoginStatus"] != null)
+                                {
+                                    <div class="text-center w-75 m-auto">
+                                        <p class="text-danger">@TempData["LoginStatus"]</p>
+                                    </div>
+                                }
                                 <div class="form-group mb-3">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked="">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox-signin">
                                         <label class="custom-control-label" for="checkbox-signin">Remember me</label>
                                     </div>
                                 </div>
@@ -77,7 +84,7 @@
     </div>
     <!-- end page -->
     <footer class="footer footer-alt">
-        Đại học Mở Hà Nội
+        <h5>HOU LMS - HOU Learning Management System</h5>
     </footer>
     <!-- bundle -->
     <script src="/js/vendor.min.js"></script>

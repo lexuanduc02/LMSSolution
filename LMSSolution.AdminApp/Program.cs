@@ -13,6 +13,9 @@ builder.Services.AddControllersWithViews()
         fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
     });
 
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
+
 builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>
 {

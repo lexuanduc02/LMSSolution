@@ -40,7 +40,7 @@ namespace LMSSolution.AdminApp.Controllers
 
             if(token.IsNullOrEmpty())
             {
-                ModelState.AddModelError("LoginFailed", "Invalid Login Attempt");
+                TempData["LoginStatus"] = "*Email or Password are incorrect";
                 return View(request);
             }
 
