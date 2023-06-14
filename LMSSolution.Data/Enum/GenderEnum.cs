@@ -10,5 +10,6 @@ namespace LMSSolution.Data.Enum
     {
         Female,
         Male,
+        Unknown
     }
 }
