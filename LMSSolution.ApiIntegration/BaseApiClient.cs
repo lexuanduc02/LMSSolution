@@ -22,10 +22,5 @@ namespace LMSSolution.ApiIntegration
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
         }
-
-        protected GetAsync(string url)
-        {
-
-        }
     }
 }

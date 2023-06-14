@@ -31,7 +31,7 @@ namespace LMSSolution.BackendApi.Controllers
 
             if (!resultToken.IsSuccess)
             {
-                return BadRequest("Email or password is incorrect");
+                return BadRequest(resultToken.Message);
             }
 
             return Ok(resultToken);

@@ -32,7 +32,7 @@ namespace LMSSolution.Application.Auth
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null) 
-                return new ApiErrorResult<string>("Email or Password are invalid");
+                return new ApiErrorResult<string>("Email hoặc mật khẩu không chính xác");
 
             //var checkRole = await _userManager.IsInRoleAsync(user, "admin") || await _userManager.IsInRoleAsync(user, "officer");
 
@@ -45,7 +45,7 @@ namespace LMSSolution.Application.Auth
 
             if(!result.Succeeded)
             {
-                return new ApiErrorResult<string>("Email or Password are invalid");
+                return new ApiErrorResult<string>("Email hoặc mật khẩu không chính xác");
             }
 
             var roles = _userManager.GetRolesAsync(user);

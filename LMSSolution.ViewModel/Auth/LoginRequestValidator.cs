@@ -6,10 +6,14 @@ namespace LMSSolution.ViewModels.Auth
     {
         public LoginRequestValidator() 
         {
-            RuleFor(x => x.Email).EmailAddress().WithMessage("Your email is invalid");
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Email không được để trống.")
+                .NotNull().WithMessage("Email không được để trống.")
+                .EmailAddress().WithMessage("Email không hợp lệ.");
 
-            RuleFor(p => p.Password).MinimumLength(8).WithMessage("Your password length must be at least 8.")
-                    .MaximumLength(16).WithMessage("Your password length must not exceed 16.");
+            RuleFor(p => p.Password).NotEmpty().WithMessage("Mật khẩu không được để trống.")
+                .NotNull().WithMessage("Email không được để trống.")
+                .MinimumLength(8).WithMessage("Mật khẩu phải có ít nhất 8 kí tự.")
+                .MaximumLength(16).WithMessage("Mật khẩu không quá 16 kí tự.");
         }
     }
 }
