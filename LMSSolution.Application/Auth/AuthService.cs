@@ -1,5 +1,6 @@
 ﻿using LMSSolution.Data.Entities;
 using LMSSolution.ViewModels.Auth;
+using LMSSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -26,11 +27,12 @@ namespace LMSSolution.Application.Auth
             _signInManager = signInManager;
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
+        public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
 
-            if (user == null) return null;
+            if (user == null) 
+                return new ApiErrorResult<string>("Email or Password are invalid");
 
             //var checkRole = await _userManager.IsInRoleAsync(user, "admin") || await _userManager.IsInRoleAsync(user, "officer");
 
@@ -43,7 +45,7 @@ namespace LMSSolution.Application.Auth
 
             if(!result.Succeeded)
             {
-                return null;
+                return new ApiErrorResult<string>("Email or Password are invalid");
             }
 
             var roles = _userManager.GetRolesAsync(user);
@@ -55,16 +57,25 @@ namespace LMSSolution.Application.Auth
                 new Claim(ClaimTypes.Role, string.Join(";", roles)),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var issuer = config["JwtSettings:Issuer"];
+            var audience = config["JwtSettings:Audience"];
+            var key = Encoding.UTF8.GetBytes(config["JwtSettings:Key"]);
 
-            var token = new JwtSecurityToken(config["JwtSettings:Issuer"],
-                config["JwtSettings:Audience"],
-                claims,
-                expires: DateTime.Now.AddHours(3),
-                signingCredentials: creds);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDesciptior = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddHours(8),
+                Issuer = issuer,
+                Audience = audience,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256),
+            };
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var token = tokenHandler.CreateToken(tokenDesciptior);
+
+            var jwtToken = tokenHandler.WriteToken(token);
+
+            return new ApiSuccessResult<string>(jwtToken);
         }
 
         public Task<bool> RegisterRequest(RegisterRequest request)

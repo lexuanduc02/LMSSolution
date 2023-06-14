@@ -173,17 +173,14 @@
                                 </div>
                             </li>
                             <li class="dropdown notification-list">
-                                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown"
+                                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0 text-center" data-toggle="dropdown"
                                     id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
                                     aria-expanded="false">
                                     <span class="account-user-avatar">
                                         <img src="/images/users/avatar-1.jpg" alt="user-image"
                                             class="rounded-circle">
                                     </span>
-                                    <span>
-                                        <span class="account-user-name">Dominic Keller</span>
-                                        <span class="account-position">Founder</span>
-                                    </span>
+                                    <span class="account-user-name">@User.Identity.Name</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown"
                                     aria-labelledby="topbar-userdrop">
@@ -197,22 +194,7 @@
                                         <span>My Account</span>
                                     </a>
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-account-edit mr-1"></i>
-                                        <span>Settings</span>
-                                    </a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-lifebuoy mr-1"></i>
-                                        <span>Support</span>
-                                    </a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-lock-outline mr-1"></i>
-                                        <span>Lock Screen</span>
-                                    </a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <a asp-action="Logout" asp-controller="Auth" class="dropdown-item notify-item">
                                         <i class="mdi mdi-logout mr-1"></i>
                                         <span>Logout</span>
                                     </a>
@@ -226,7 +208,6 @@
                                 <span></span>
                             </div>
                         </a>
-
                     </div>
                 </div>
                 <!-- end Topbar -->
@@ -274,7 +255,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            Trường Đại học MỞ Hà Nội
+                            HOU LMS - HOU Learning Management System
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-right footer-links d-none d-md-block">

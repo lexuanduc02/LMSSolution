@@ -29,7 +29,7 @@ namespace LMSSolution.BackendApi.Controllers
 
             var resultToken = await _authService.Authenticate(request);
 
-            if(resultToken == null)
+            if (!resultToken.IsSuccess)
             {
                 return BadRequest("Email or password is incorrect");
             }

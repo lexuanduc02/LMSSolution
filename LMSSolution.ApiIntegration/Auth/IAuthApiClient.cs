@@ -1,4 +1,5 @@
 ﻿using LMSSolution.ViewModels.Auth;
+using LMSSolution.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace LMSSolution.ApiIntegration.Auth
 {
     public interface IAuthApiClient
     {
-        Task<string> Authenticate(LoginRequest request);
+        Task<ApiResult<string>> Authenticate(LoginRequest request);
     }
 }

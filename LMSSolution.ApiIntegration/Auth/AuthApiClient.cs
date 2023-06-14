@@ -1,4 +1,5 @@
 ﻿using LMSSolution.ViewModels.Auth;
+using LMSSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -26,7 +27,7 @@ namespace LMSSolution.ApiIntegration.Auth
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
+        public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -39,11 +40,9 @@ namespace LMSSolution.ApiIntegration.Auth
             var result = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
-            {
-                return null;
-            }
+                return new ApiErrorResult<string>(result); 
 
-            return result;
+            return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(result);
         }
     }
 }

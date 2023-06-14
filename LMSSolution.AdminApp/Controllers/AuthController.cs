@@ -36,20 +36,22 @@ namespace LMSSolution.AdminApp.Controllers
             if (!ModelState.IsValid)
                 return View(request);
 
-            var token = await _authApiClient.Authenticate(request);
+            var result = await _authApiClient.Authenticate(request);
 
-            if(token.IsNullOrEmpty())
+            if(!result.IsSuccess)
             {
-                TempData["LoginStatus"] = "*Email or Password are incorrect";
+                TempData["LoginStatus"] = "*" + result.Message;
                 return View(request);
             }
+
+            var token = result.ResultObject;
 
             var userPrincipal = this.ValidateToken(token);
 
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
-                IsPersistent = false,
+                ExpiresUtc = DateTime.UtcNow.AddDays(2),
+                IsPersistent = request.RememberMe,
             };
 
             HttpContext.Session.SetString("LoginToken", token);
@@ -66,7 +68,7 @@ namespace LMSSolution.AdminApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return View();
+            return View("Login");
         }
 
         private ClaimsPrincipal ValidateToken(string jwtToken)
