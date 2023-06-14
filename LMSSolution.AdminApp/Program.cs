@@ -1,7 +1,37 @@
+using FluentValidation.AspNetCore;
+using LMSSolution.ApiIntegration.Auth;
+using LMSSolution.ViewModels.Auth;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(fv =>
+    {
+        fv.AutomaticValidationEnabled = true;
+        fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
+    });
+
+builder.Services.AddHttpClient();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+//Declare DI
+builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<IAuthApiClient, AuthApiClient>();
+
+    //Add Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login/";
+        options.AccessDeniedPath = "/Auth/AccessDenied/";
+    });
 
 var app = builder.Build();
 
@@ -16,8 +46,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
+
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

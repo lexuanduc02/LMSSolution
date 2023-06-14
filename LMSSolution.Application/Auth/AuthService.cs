@@ -32,6 +32,13 @@ namespace LMSSolution.Application.Auth
 
             if (user == null) return null;
 
+            //var checkRole = await _userManager.IsInRoleAsync(user, "admin") || await _userManager.IsInRoleAsync(user, "officer");
+
+            //if (!checkRole)
+            //{
+            //    return null;
+            //}
+
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
 
             if(!result.Succeeded)
