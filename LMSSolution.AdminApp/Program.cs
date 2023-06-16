@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using LMSSolution.ApiIntegration.Auth;
+using LMSSolution.ApiIntegration.Course;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -27,8 +28,9 @@ builder.Services.AddSession(options =>
 //Declare DI
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IAuthApiClient, AuthApiClient>();
+builder.Services.AddTransient<ICourseApiClient, CourseApiClient>();
 
-    //Add Authentication
+//Add Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

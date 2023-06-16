@@ -40,7 +40,7 @@ namespace LMSSolution.AdminApp.Controllers
 
             if(!result.IsSuccess)
             {
-                TempData["LoginStatus"] = "*" + result.Message;
+                ModelState.AddModelError("LoginFailed", result.Message);
                 return View(request);
             }
 

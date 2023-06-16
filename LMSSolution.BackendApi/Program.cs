@@ -1,12 +1,14 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using LMSSolution.Application.Auth;
+using LMSSolution.Application.Course;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
 using LMSSolution.Utilities.Constants;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -20,9 +22,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<LMSDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
-builder.Services.AddControllers()
-    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+builder.Services.AddControllers();
+//builder.Services.AddControllers(options =>
+//{
+//    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+//});
 
+builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -57,6 +63,8 @@ builder.Services.AddSwaggerGen(c =>
                       }
                     });
 });
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 string issuer = builder.Configuration.GetValue<string>("JwtSettings:Issuer");
 string audience = builder.Configuration.GetValue<string>("JwtSettings:Audience");
@@ -94,6 +102,7 @@ builder.Services.AddDefaultIdentity<User>()
 builder.Services.AddTransient<UserManager<User>, UserManager<User>>();
 builder.Services.AddTransient<SignInManager<User>, SignInManager<User>>();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<ICourseService, CourseService>();
 
 var app = builder.Build();
 
