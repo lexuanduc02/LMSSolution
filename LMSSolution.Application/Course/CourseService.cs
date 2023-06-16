@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LMSSolution.Data.EF;
+using LMSSolution.Data.Entities;
 using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Course;
 using Microsoft.EntityFrameworkCore;
@@ -89,7 +90,12 @@ namespace LMSSolution.Application.Course
 
         public async Task<ApiResult<PagedResult<CourseViewModel>>> GetAllCoursePaging(GetCoursePagingRequest request)
         {
-            var query =  _context.Courses;
+            var query =  _context.Courses.AsQueryable();
+
+            if(!string.IsNullOrEmpty(request.KeyWord))
+            {
+                query = query.Where(c => c.Name.Contains(request.KeyWord));
+            }
 
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                                 .Take(request.PageSize)
