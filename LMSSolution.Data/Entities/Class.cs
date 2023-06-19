@@ -18,7 +18,9 @@ namespace LMSSolution.Data.Entities
         public int MajorId { get; set; }
         public Major Major { get; set; }
 
+        public Guid TeacherId { get; set; }
+        public User Teacher { get; set; }
+
         public ICollection<User> Students { get; set; } = new List<User>();
-        public ICollection<TeacherClass> TeacherClasses { get; set; } = new List<TeacherClass>();
     }
 }

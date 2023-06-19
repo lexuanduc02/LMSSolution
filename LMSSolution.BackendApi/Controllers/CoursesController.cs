@@ -69,12 +69,29 @@ namespace LMSSolution.BackendApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _courseService.Delete(request);
+            var result = await _courseService.Delete(request.Id);
 
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
             }
+
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCourse(int id)
+        {
+            var result = await _courseService.GetCourseById(id);
+
+            return Ok(result);
+        }
+
+
+        [HttpGet("Detail/{id}")]
+        public async Task<IActionResult> GetCourseDetail(int id)
+        {
+            var result = await _courseService.GetCourseDetailById(id);
 
             return Ok(result);
         }

@@ -23,6 +23,7 @@ namespace LMSSolution.Data.Configurations
 
             builder.HasOne(c => c.Course).WithMany(c => c.Classes).HasForeignKey(c => c.CourseId).OnDelete(DeleteBehavior.ClientNoAction);
             builder.HasOne(m => m.Major).WithMany(c => c.Classes).HasForeignKey(x => x.MajorId).OnDelete(DeleteBehavior.ClientNoAction);
+            builder.HasOne(m => m.Teacher).WithMany(c => c.Classes).HasForeignKey(x => x.TeacherId).OnDelete(DeleteBehavior.ClientNoAction);
         }
     }
 }

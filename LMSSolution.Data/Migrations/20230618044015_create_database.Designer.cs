@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSSolution.Data.Migrations
 {
     [DbContext(typeof(LMSDbContext))]
-    [Migration("20230609092822_create_database_lms_hou")]
-    partial class create_database_lms_hou
+    [Migration("20230618044015_create_database")]
+    partial class create_database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,11 +78,16 @@ namespace LMSSolution.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.HasIndex("MajorId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Classes", (string)null);
                 });
@@ -96,7 +101,6 @@ namespace LMSSolution.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
@@ -183,7 +187,6 @@ namespace LMSSolution.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -239,8 +242,7 @@ namespace LMSSolution.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descrition")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -263,7 +265,6 @@ namespace LMSSolution.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -276,6 +277,32 @@ namespace LMSSolution.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c17d487e-646a-47e2-9ee4-b319155e326e"),
+                            Name = "admin",
+                            NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("e029d545-0a04-4088-b156-0f1afa8ef68b"),
+                            Name = "officer",
+                            NormalizedName = "officer"
+                        },
+                        new
+                        {
+                            Id = new Guid("3c51f349-a63e-43b1-b31f-6a7a0addf485"),
+                            Name = "teacher",
+                            NormalizedName = "teacher"
+                        },
+                        new
+                        {
+                            Id = new Guid("811bc9ca-0e15-48c3-bc44-851d5a386c78"),
+                            Name = "student",
+                            NormalizedName = "student"
+                        });
                 });
 
             modelBuilder.Entity("LMSSolution.Data.Entities.StudentAttendance", b =>
@@ -287,7 +314,6 @@ namespace LMSSolution.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
@@ -309,7 +335,6 @@ namespace LMSSolution.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StudentId", "ExaminationId");
@@ -328,7 +353,6 @@ namespace LMSSolution.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("EndAt")
@@ -377,26 +401,6 @@ namespace LMSSolution.Data.Migrations
                     b.ToTable("SubjectMajors", (string)null);
                 });
 
-            modelBuilder.Entity("LMSSolution.Data.Entities.TeacherClass", b =>
-                {
-                    b.Property<Guid>("TeacherId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("TeacherId", "ClassId");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("TeacherClasses", (string)null);
-                });
-
             modelBuilder.Entity("LMSSolution.Data.Entities.TeacherExamination", b =>
                 {
                     b.Property<Guid>("TeacherId")
@@ -406,7 +410,6 @@ namespace LMSSolution.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TeacherId", "ExaminationId");
@@ -510,6 +513,29 @@ namespace LMSSolution.Data.Migrations
                     b.HasIndex("MajorId");
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d7d6ae65-8029-46c5-a006-f89d6d04fa8c"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5663712f-8f4e-4aa6-b7c7-e8b1c6346492",
+                            Dob = new DateTime(1993, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "lms@hou.edu.vn",
+                            EmailConfirmed = true,
+                            FirstName = "Đại học",
+                            Gender = 1,
+                            LastName = "Mở Hà Nội",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "lms@hou.edu.vn",
+                            NormalizedUserName = "hou_admin",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPdEUHsvMPuRt+PEzLQqwhfn742OzBEKdm0Qq632DtVdZ+05dtRhH61TFKBPt0xk7w==",
+                            PhoneNumber = "024 3868 2321",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "hou_admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -589,6 +615,13 @@ namespace LMSSolution.Data.Migrations
                     b.HasKey("RoleId", "UserId");
 
                     b.ToTable("UserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = new Guid("c17d487e-646a-47e2-9ee4-b319155e326e"),
+                            UserId = new Guid("d7d6ae65-8029-46c5-a006-f89d6d04fa8c")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -654,9 +687,17 @@ namespace LMSSolution.Data.Migrations
                         .OnDelete(DeleteBehavior.ClientNoAction)
                         .IsRequired();
 
+                    b.HasOne("LMSSolution.Data.Entities.User", "Teacher")
+                        .WithMany("Classes")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
                     b.Navigation("Course");
 
                     b.Navigation("Major");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("LMSSolution.Data.Entities.CreditClass", b =>
@@ -781,25 +822,6 @@ namespace LMSSolution.Data.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("LMSSolution.Data.Entities.TeacherClass", b =>
-                {
-                    b.HasOne("LMSSolution.Data.Entities.Class", "Class")
-                        .WithMany("TeacherClasses")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.HasOne("LMSSolution.Data.Entities.User", "Teacher")
-                        .WithMany("TeacherClasses")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-
-                    b.Navigation("Teacher");
-                });
-
             modelBuilder.Entity("LMSSolution.Data.Entities.TeacherExamination", b =>
                 {
                     b.HasOne("LMSSolution.Data.Entities.Examination", "Examination")
@@ -863,8 +885,6 @@ namespace LMSSolution.Data.Migrations
             modelBuilder.Entity("LMSSolution.Data.Entities.Class", b =>
                 {
                     b.Navigation("Students");
-
-                    b.Navigation("TeacherClasses");
                 });
 
             modelBuilder.Entity("LMSSolution.Data.Entities.Course", b =>
@@ -924,13 +944,13 @@ namespace LMSSolution.Data.Migrations
                 {
                     b.Navigation("Attendances");
 
+                    b.Navigation("Classes");
+
                     b.Navigation("Lessons");
 
                     b.Navigation("StudentAttendances");
 
                     b.Navigation("StudentExaminations");
-
-                    b.Navigation("TeacherClasses");
 
                     b.Navigation("TeacherExaminations");
 

@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
+using LMSSolution.ViewModels.Class;
 using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Course;
+using LMSSolution.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace LMSSolution.Application.Course
 {
@@ -20,8 +24,16 @@ namespace LMSSolution.Application.Course
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CourseCreateRequest, Data.Entities.Course>();
+
                 cfg.CreateMap<CourseEditRequest, Data.Entities.Course>();
+
                 cfg.CreateMap<Data.Entities.Course, CourseViewModel>();
+
+                cfg.CreateMap<Data.Entities.Course, CourseDetailViewModel>();
+
+                cfg.CreateMap<Data.Entities.Class, ClassViewModel>();
+
+                cfg.CreateMap<User, UserViewModel>();
             });
 
             _mapper = config.CreateMapper();
@@ -44,9 +56,9 @@ namespace LMSSolution.Application.Course
             return new ApiErrorResult<bool>("Thêm mới khóa học thất bại!");
         }
 
-        public async Task<ApiResult<bool>> Delete(CourseDeleteRequest request)
+        public async Task<ApiResult<bool>> Delete(int Id)
         {
-            var course = await _context.Courses.FindAsync(request.Id);
+            var course = await _context.Courses.FindAsync(Id);
 
             if(course == null)
             {
@@ -112,6 +124,37 @@ namespace LMSSolution.Application.Course
             };
 
             return new ApiSuccessResult<PagedResult<CourseViewModel>>(pagedResult);
+        }
+
+        public async Task<ApiResult<CourseViewModel>> GetCourseById(int Id)
+        {
+            var course = await _context.Courses
+                        .FirstOrDefaultAsync(c => c.Id == Id);
+
+            if (course == null)
+            {
+                return new ApiErrorResult<CourseViewModel>("Khóa không tồn tại!");
+            }
+
+            var data = _mapper.Map(course, new CourseViewModel());
+
+            return new ApiSuccessResult<CourseViewModel>(data);
+        }
+
+        public async Task<ApiResult<CourseDetailViewModel>> GetCourseDetailById(int Id)
+        {
+            var course = await _context.Courses
+                .Include(c => c.Classes).ThenInclude(cl => cl.Teacher)
+                .FirstOrDefaultAsync(c => c.Id == Id);
+
+            if (course == null)
+            {
+                return new ApiErrorResult<CourseDetailViewModel>("Khóa không tồn tại!");
+            }
+
+            var data = _mapper.Map(course, new CourseDetailViewModel());
+
+            return new ApiSuccessResult<CourseDetailViewModel>(data);
         }
     }
 }

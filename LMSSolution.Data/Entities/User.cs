@@ -17,7 +17,7 @@ namespace LMSSolution.Data.Entities
         public Major? Major { get; set; }
 
         public ICollection<TeacherSubject> TeacherSubjects { get; set; } = new List<TeacherSubject>();
-        public ICollection<TeacherClass> TeacherClasses { get; set; } = new List<TeacherClass>();
+        public ICollection<Class> Classes { get; set; } = new List<Class>();
         public ICollection<StudentAttendance> StudentAttendances { get; set; } = new List<StudentAttendance>();
         public ICollection<StudentExamination> StudentExaminations { get; set; } = new List<StudentExamination>();
         public ICollection<TeacherExamination> TeacherExaminations { get; set; } = new List<TeacherExamination>();

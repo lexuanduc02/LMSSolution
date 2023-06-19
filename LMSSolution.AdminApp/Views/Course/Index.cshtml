@@ -48,6 +48,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
                                                 <td class="table-action">
+                                                    <a href="@Url.Action("Detail", "Course", new { id = item.Id })" class="action-icon"><i class="mdi mdi-account-details-outline"></i></a>
                                                     <a href="@Url.Action("Update", "Course", new { id = item.Id })" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>
                                                     <a href="@Url.Action("Delete", "Course", new { id = item.Id })" class="action-icon"><i class="mdi mdi-delete"></i></a>
                                                 </td>

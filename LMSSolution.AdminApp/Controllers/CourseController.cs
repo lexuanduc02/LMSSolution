@@ -1,4 +1,6 @@
-﻿using LMSSolution.ApiIntegration.Course;
+﻿using AutoMapper;
+using Azure.Core;
+using LMSSolution.ApiIntegration.Course;
 using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Course;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +16,7 @@ namespace LMSSolution.AdminApp.Controllers
             _courseApiClient = courseApiClient;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(string keyWord = "", int pageIndex = 1, int pageSize = 20)
         {
             var request = new GetCoursePagingRequest()
@@ -60,6 +63,54 @@ namespace LMSSolution.AdminApp.Controllers
             TempData["result"] = "Thêm mới thành công!";
 
             return RedirectToAction("Index", "Course");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _courseApiClient.GetCourse(id);
+
+            if(result.IsSuccess)
+            {
+                var course = result.ResultObject;
+                var deleteRequest = new CourseDeleteRequest()
+                {
+                    Id = course.Id,
+                    Name = course.Name,
+                };
+
+                return View(deleteRequest);
+            }
+
+            return RedirectToAction("Error404", "Error");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(CourseDeleteRequest request)
+        {
+            var result = await _courseApiClient.Delete(request);
+
+            if(!result.IsSuccess) 
+            {
+                ModelState.AddModelError("", result.Message);
+                return View(request);
+            }
+
+            TempData["result"] = "Xóa thành công!";
+            return RedirectToAction("Index", "Course");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var result = await _courseApiClient.GetCourseDetailById(id);
+
+            if (!result.IsSuccess)
+            {
+                return RedirectToAction("Index", "Course");
+            }
+
+            return View(result.ResultObject);
         }
     }
 }

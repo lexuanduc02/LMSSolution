@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Bogus.Bson;
+using Azure.Core;
 
 namespace LMSSolution.ApiIntegration.Course
 {
@@ -48,6 +49,58 @@ namespace LMSSolution.ApiIntegration.Course
             };
 
             return new ApiErrorResult<bool>(result);
+        }
+
+        public async Task<ApiResult<bool>> Delete(CourseDeleteRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddressUri"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("LoginToken"));
+
+            var response = await client.DeleteAsync($"/api/courses/{request.Id}");
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new ApiSuccessResult<bool>();
+            };
+
+            return new ApiErrorResult<bool>(result);
+        }
+
+        public async Task<ApiResult<CourseViewModel>> GetCourse(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddressUri"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("LoginToken"));
+
+            var response = await client.GetAsync($"api/courses/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject <ApiSuccessResult<CourseViewModel>>(result);
+            }
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<CourseViewModel>>(result);
+        }
+
+        public async Task<ApiResult<CourseDetailViewModel>> GetCourseDetailById(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddressUri"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("LoginToken"));
+
+            var response = await client.GetAsync($"api/courses/detail/{id}");
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<CourseDetailViewModel>>(result);
+            }
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<CourseDetailViewModel>>(result);
         }
 
         public async Task<ApiResult<PagedResult<CourseViewModel>>> GetCoursesPaging(GetCoursePagingRequest request)
