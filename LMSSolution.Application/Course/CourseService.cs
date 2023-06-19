@@ -69,7 +69,7 @@ namespace LMSSolution.Application.Course
 
             var result = await _context.SaveChangesAsync();
 
-            if(result != 1)
+            if (result > 0)
             {
                 return new ApiErrorResult<bool>("Xóa không thành công!");
             }
@@ -92,12 +92,12 @@ namespace LMSSolution.Application.Course
 
             var result = await _context.SaveChangesAsync();
 
-            if (result != 1)
+            if (result > 0)
             {
-                return new ApiErrorResult<bool>("Cập nhật thất bại!");
+                return new ApiSuccessResult<bool>();
             }
 
-            return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Cập nhật thất bại!");
         }
 
         public async Task<ApiResult<PagedResult<CourseViewModel>>> GetAllCoursePaging(GetCoursePagingRequest request)

@@ -13,10 +13,12 @@ namespace LMSSolution.ViewModels.Course
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("Tên khóa không được để trống.");
 
-            RuleFor(x => x.StartDate).NotEmpty().WithMessage("Ngày bắt đầu không được để trống.")
-                .GreaterThan(x => x.EndDate).WithMessage("Ngày bắt đầu cần trước ngày kết thúc.");
+            RuleFor(x => x.StartDate).NotEmpty().WithMessage("Ngày bắt đầu không được để trống.");
 
             RuleFor(x => x.EndDate).NotEmpty().WithMessage("Ngày kết thúc không được để trống.");
+
+            RuleFor(x => x).Must(x => x.EndDate == default(DateTime) || x.StartDate == default(DateTime) || x.EndDate > x.StartDate)
+                        .WithMessage("EndTime must greater than StartTime");
         }
     }
 }

@@ -1,22 +1,27 @@
 ﻿@using LMSSolution.ViewModels.Course
-@model CourseCreateRequest
+@model CourseEditRequest
 @{
-    ViewData["Title"] = "Thêm khóa mới";
+    ViewData["Title"] = "Cập nhật khóa " + Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @section css {
     <link href="assets/css/vendor/summernote-bs4.css" rel="stylesheet" type="text/css" />
 }
 
 <a class="btn btn-rounded mb-3" asp-action="Index" asp-controller="Course"><i class="mdi mdi-reply mr-1"></i>Return</a>
 
-<form asp-action="Create" asp-controller="Course">
+<form asp-action="Update" asp-controller="Course" method="post">
     <div class="form-group row mb-3">
         <label asp-for="Name" class="col-3 col-form-label">Tên khóa</label>
         <div class="col-9">
-            <input type="text" asp-for="Name" class="form-control" placeholder="Tên khóa ">
+            <input type="text" asp-for="Name" class="form-control" placeholder="Tên khóa " value="@Model.Name">
             <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Description" class="col-3 col-form-label">Mô tả</label>
+        <div class="col-9">
+            <textarea id="summernote-basic" asp-for="Description" class="form-control" placeholder="Mô tả">@Model.Description</textarea>
         </div>
     </div>
     <div class="form-group row mb-3">
@@ -25,26 +30,22 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label asp-for="StartDate" class="col-form-label">Bắt đầu</label>
-                    <input asp-for="StartDate" class="form-control" placeholder="Ngày bắt đầu" type="date">
+                    <input asp-for="StartDate" class="form-control" placeholder="Ngày bắt đầu" type="text" data-provide="datepicker" value="@Model.StartDate">
                     <span asp-validation-for="StartDate" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label asp-for="EndDate" class="col-form-label">Bắt đầu</label>
-                    <input asp-for="EndDate" class="form-control" placeholder="Ngày bắt đầu" type="date">
+                    <input asp-for="EndDate" class="form-control" placeholder="Ngày bắt đầu" type="text" data-provide="datepicker" value="@Model.EndDate">
                     <span asp-validation-for="EndDate" class="text-danger"></span>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group row mb-3">
-        <label asp-for="Description" class="col-3 col-form-label">Mô tả</label>
-        <div class="col-9">
-            <textarea id="summernote-basic" asp-for="Description" class="form-control" placeholder="Mô tả"></textarea>
-        </div>
-    </div>
     <div class="form-group mb-0 justify-content-end row">
+        <div asp-validation-summary=ModelOnly class="col-9 text-danger">
+        </div>
         <div class="col-9">
-            <button type="submit" class="btn btn-info">Thêm mới</button>
+            <button type="submit" class="btn btn-info">Cập nhật</button>
         </div>
     </div>
 </form>
@@ -55,4 +56,5 @@
     <!-- Summernote demo -->
     <script src="assets/js/pages/demo.summernote.js"></script>
 }
+
 

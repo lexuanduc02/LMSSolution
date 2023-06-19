@@ -15,5 +15,6 @@ namespace LMSSolution.ApiIntegration.Course
         Task<ApiResult<CourseViewModel>> GetCourse(int id);
         Task<ApiResult<bool>> Delete(CourseDeleteRequest request);
         Task<ApiResult<CourseDetailViewModel>> GetCourseDetailById(int id);
+        Task<ApiResult<bool>> Update(CourseEditRequest request);
     }
 }

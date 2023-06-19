@@ -107,10 +107,55 @@ namespace LMSSolution.AdminApp.Controllers
 
             if (!result.IsSuccess)
             {
-                return RedirectToAction("Index", "Course");
+                return RedirectToAction("Error404", "Error");
             }
 
             return View(result.ResultObject);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var apiResult = await _courseApiClient.GetCourse(id);
+
+            if(!apiResult.IsSuccess)
+            {
+                return RedirectToAction("Error404", "Error"); ;
+            }
+
+            var course = apiResult.ResultObject;
+
+            var editRequest = new CourseEditRequest()
+            { 
+                Id = course.Id,
+                Name = course.Name,
+                Description = course.Description,
+                StartDate = course.StartDate,
+                EndDate = course.EndDate,
+            };
+
+
+            return View(editRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CourseEditRequest request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(request);
+            }
+
+            var apiResult = await _courseApiClient.Update(request);
+
+            if(!apiResult.IsSuccess)
+            {
+                ModelState.AddModelError("", "Cập nhật không thành công");
+                return View(request);
+            }
+
+            TempData["result"] = "Cập nhật thành công!";
+            return RedirectToAction("Index", "Course");
         }
     }
 }

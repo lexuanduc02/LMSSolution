@@ -43,8 +43,8 @@ namespace LMSSolution.BackendApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Edit([FromForm] CourseEditRequest request)
+        [HttpPut("edit")]
+        public async Task<IActionResult> Edit([FromBody] CourseEditRequest request)
         {
             if(!ModelState.IsValid)
             {
@@ -61,15 +61,15 @@ namespace LMSSolution.BackendApi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromForm] CourseDeleteRequest request)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _courseService.Delete(request.Id);
+            var result = await _courseService.Delete(id);
 
             if (!result.IsSuccess)
             {
@@ -86,7 +86,6 @@ namespace LMSSolution.BackendApi.Controllers
 
             return Ok(result);
         }
-
 
         [HttpGet("Detail/{id}")]
         public async Task<IActionResult> GetCourseDetail(int id)
