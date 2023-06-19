@@ -1,16 +1,22 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using LMSSolution.Application.Auth;
+using LMSSolution.Application.Class;
+using LMSSolution.Application.Course;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
 using LMSSolution.Utilities.Constants;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +27,13 @@ builder.Services.AddDbContext<LMSDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
 builder.Services.AddControllers()
-    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+//builder.Services.AddControllers(options =>
+//{
+//    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+//});
 
+builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -58,6 +69,8 @@ builder.Services.AddSwaggerGen(c =>
                     });
 });
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 string issuer = builder.Configuration.GetValue<string>("JwtSettings:Issuer");
 string audience = builder.Configuration.GetValue<string>("JwtSettings:Audience");
 string singingKey = builder.Configuration.GetValue<string>("JwtSettings:Key");
@@ -90,10 +103,12 @@ builder.Services.AddDefaultIdentity<User>()
     .AddEntityFrameworkStores<LMSDbContext>()
     .AddDefaultTokenProviders();
 
-    //Declare DI
+//Declare DI
 builder.Services.AddTransient<UserManager<User>, UserManager<User>>();
 builder.Services.AddTransient<SignInManager<User>, SignInManager<User>>();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<ICourseService, CourseService>();
+builder.Services.AddTransient<IClassService, ClassService>();
 
 var app = builder.Build();
 

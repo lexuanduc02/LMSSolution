@@ -75,11 +75,16 @@ namespace LMSSolution.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.HasIndex("MajorId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Classes", (string)null);
                 });
@@ -393,25 +398,6 @@ namespace LMSSolution.Data.Migrations
                     b.ToTable("SubjectMajors", (string)null);
                 });
 
-            modelBuilder.Entity("LMSSolution.Data.Entities.TeacherClass", b =>
-                {
-                    b.Property<Guid>("TeacherId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("TeacherId", "ClassId");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("TeacherClasses", (string)null);
-                });
-
             modelBuilder.Entity("LMSSolution.Data.Entities.TeacherExamination", b =>
                 {
                     b.Property<Guid>("TeacherId")
@@ -530,7 +516,7 @@ namespace LMSSolution.Data.Migrations
                         {
                             Id = new Guid("d7d6ae65-8029-46c5-a006-f89d6d04fa8c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "92abd6c9-6122-4422-9dce-a4548c7c2bf1",
+                            ConcurrencyStamp = "5663712f-8f4e-4aa6-b7c7-e8b1c6346492",
                             Dob = new DateTime(1993, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lms@hou.edu.vn",
                             EmailConfirmed = true,
@@ -540,7 +526,7 @@ namespace LMSSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "lms@hou.edu.vn",
                             NormalizedUserName = "hou_admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEBILFTKBqgpa7L7JFSSmAr9rkSG7hls18fnCrH0lvUvpXI3sFj0wsjfHXCsMFvA5Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPdEUHsvMPuRt+PEzLQqwhfn742OzBEKdm0Qq632DtVdZ+05dtRhH61TFKBPt0xk7w==",
                             PhoneNumber = "024 3868 2321",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -698,9 +684,17 @@ namespace LMSSolution.Data.Migrations
                         .OnDelete(DeleteBehavior.ClientNoAction)
                         .IsRequired();
 
+                    b.HasOne("LMSSolution.Data.Entities.User", "Teacher")
+                        .WithMany("Classes")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
                     b.Navigation("Course");
 
                     b.Navigation("Major");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("LMSSolution.Data.Entities.CreditClass", b =>
@@ -825,25 +819,6 @@ namespace LMSSolution.Data.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("LMSSolution.Data.Entities.TeacherClass", b =>
-                {
-                    b.HasOne("LMSSolution.Data.Entities.Class", "Class")
-                        .WithMany("TeacherClasses")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.HasOne("LMSSolution.Data.Entities.User", "Teacher")
-                        .WithMany("TeacherClasses")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-
-                    b.Navigation("Teacher");
-                });
-
             modelBuilder.Entity("LMSSolution.Data.Entities.TeacherExamination", b =>
                 {
                     b.HasOne("LMSSolution.Data.Entities.Examination", "Examination")
@@ -907,8 +882,6 @@ namespace LMSSolution.Data.Migrations
             modelBuilder.Entity("LMSSolution.Data.Entities.Class", b =>
                 {
                     b.Navigation("Students");
-
-                    b.Navigation("TeacherClasses");
                 });
 
             modelBuilder.Entity("LMSSolution.Data.Entities.Course", b =>
@@ -968,13 +941,13 @@ namespace LMSSolution.Data.Migrations
                 {
                     b.Navigation("Attendances");
 
+                    b.Navigation("Classes");
+
                     b.Navigation("Lessons");
 
                     b.Navigation("StudentAttendances");
 
                     b.Navigation("StudentExaminations");
-
-                    b.Navigation("TeacherClasses");
 
                     b.Navigation("TeacherExaminations");
 

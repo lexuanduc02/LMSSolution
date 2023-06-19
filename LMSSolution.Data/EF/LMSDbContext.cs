@@ -30,7 +30,6 @@ namespace LMSSolution.Data.EF
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new StudentAttendanceConfiguration());
             modelBuilder.ApplyConfiguration(new StudentExaminationConfiguration());
-            modelBuilder.ApplyConfiguration(new TeacherClassConfiguration());
             modelBuilder.ApplyConfiguration(new TeacherSubjectConfiguration());
             modelBuilder.ApplyConfiguration(new TeacherExaminationConfiguration());
             modelBuilder.ApplyConfiguration(new StudyShiffConfiguration());
@@ -77,10 +76,8 @@ namespace LMSSolution.Data.EF
         public DbSet<User> Users { get; set; }
         public DbSet<StudentAttendance> StudentAttendances { get; set; }
         public DbSet<StudentExamination> StudentExaminations { get; set; }
-        public DbSet<TeacherClass> TeacherClasses { get; set; }
         public DbSet<TeacherExamination> TeacherExaminations { get; set; }
         public DbSet<TeacherSubject> TeacherSubjects { get; set; }
         public DbSet<StudyShiff> StudyShiffs { get; set; }
-
     }
 }

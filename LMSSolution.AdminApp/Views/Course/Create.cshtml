@@ -1,0 +1,58 @@
+﻿@using LMSSolution.ViewModels.Course
+@model CourseCreateRequest
+@{
+    ViewData["Title"] = "Thêm khóa mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css {
+    <link href="assets/css/vendor/summernote-bs4.css" rel="stylesheet" type="text/css" />
+}
+
+<a class="btn btn-rounded mb-3" asp-action="Index" asp-controller="Course"><i class="mdi mdi-reply mr-1"></i>Return</a>
+
+<form asp-action="Create" asp-controller="Course">
+    <div class="form-group row mb-3">
+        <label asp-for="Name" class="col-3 col-form-label">Tên khóa</label>
+        <div class="col-9">
+            <input type="text" asp-for="Name" class="form-control" placeholder="Tên khóa ">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Name" class="col-3 col-form-label">Thời gian</label>
+        <div class="col-9">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="StartDate" class="col-form-label">Bắt đầu</label>
+                    <input asp-for="StartDate" class="form-control" placeholder="Ngày bắt đầu" type="date">
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="EndDate" class="col-form-label">Bắt đầu</label>
+                    <input asp-for="EndDate" class="form-control" placeholder="Ngày bắt đầu" type="date">
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Description" class="col-3 col-form-label">Mô tả</label>
+        <div class="col-9">
+            <textarea id="summernote-basic" asp-for="Description" class="form-control" placeholder="Mô tả"></textarea>
+        </div>
+    </div>
+    <div class="form-group mb-0 justify-content-end row">
+        <div class="col-9">
+            <button type="submit" class="btn btn-info">Thêm mới</button>
+        </div>
+    </div>
+</form>
+
+@section js {
+    <!-- plugin js -->
+    <script src="assets/js/vendor/summernote-bs4.min.js"></script>
+    <!-- Summernote demo -->
+    <script src="assets/js/pages/demo.summernote.js"></script>
+}
+
