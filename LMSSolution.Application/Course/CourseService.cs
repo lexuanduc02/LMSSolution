@@ -78,10 +78,10 @@ namespace LMSSolution.Application.Course
 
             if (result > 0)
             {
-                return new ApiErrorResult<bool>("Xóa không thành công!");
+                return new ApiSuccessResult<bool>();
             }
 
-            return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Xóa không thành công!");
         }
 
         public async Task<ApiResult<bool>> Edit(CourseEditRequest request)
