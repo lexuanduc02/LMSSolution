@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using LMSSolution.Application.Auth;
 using LMSSolution.Application.Class;
 using LMSSolution.Application.Course;
+using LMSSolution.Application.Majors;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
 using LMSSolution.Utilities.Constants;
@@ -109,6 +110,7 @@ builder.Services.AddTransient<SignInManager<User>, SignInManager<User>>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<ICourseService, CourseService>();
 builder.Services.AddTransient<IClassService, ClassService>();
+builder.Services.AddTransient<IMajorService, MajorService>();
 
 var app = builder.Build();
 
