@@ -18,7 +18,7 @@ namespace LMSSolution.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string keyWord = "", int pageIndex = 1, int pageSize = 20)
+        public async Task<IActionResult> Index(string keyWord = "", int pageIndex = 1, int pageSize = 10)
         {
             var request = new GetCoursePagingRequest()
             {
