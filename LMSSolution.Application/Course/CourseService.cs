@@ -65,6 +65,13 @@ namespace LMSSolution.Application.Course
                 return new ApiErrorResult<bool>("Khóa học không tồn tại!");
             }
 
+            var cl = await _context.Classes.FirstOrDefaultAsync(x => x.CourseId == course.Id);
+
+            if (cl != null)
+            {
+                return new ApiErrorResult<bool>($"Không thể xóa khóa {course.Name} vì tồn tại lớp trong khóa");
+            }
+
             _context.Courses.Remove(course);
 
             var result = await _context.SaveChangesAsync();

@@ -15,11 +15,21 @@
                     </div>
                     <div class="col-sm-6 app-search">
                         <form style="max-width: 400px" class="float-right">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search..." name="KeyWord" value="@ViewBag.KeyWord">
-                                <span class="mdi mdi-magnify search-icon"></span>
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">Search</button>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" id="PageSize" name="PageSize" asp-items="@ViewBag.PageSize" onchange="this.form.submit()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search..." name="KeyWord" value="@ViewBag.KeyWord">
+                                        <span class="mdi mdi-magnify search-icon"></span>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
