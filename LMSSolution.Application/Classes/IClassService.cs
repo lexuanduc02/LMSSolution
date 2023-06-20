@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMSSolution.Application.Class
+namespace LMSSolution.Application.Classes
 {
     public interface IClassService
     {

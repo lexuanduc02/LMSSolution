@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Catalog\" />
-    <Folder Include="System\Students\" />
-    <Folder Include="System\Teachers\" />
-    <Folder Include="System\Roles\" />
+    <Folder Include="Catalogs\" />
+    <Folder Include="Systems\Students\" />
+    <Folder Include="Systems\Teachers\" />
+    <Folder Include="Systems\Roles\" />
   </ItemGroup>
 
   <ItemGroup>

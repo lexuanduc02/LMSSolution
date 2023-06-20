@@ -3,7 +3,7 @@ using LMSSolution.Data.Entities;
 using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.System.Offices;
 
-namespace LMSSolution.Application.System.Officers
+namespace LMSSolution.Application.Systems.Officers
 {
     public class OfficerService : IOfficerService
     {

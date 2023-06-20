@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMSSolution.Application.Class
+namespace LMSSolution.Application.Classes
 {
     public class ClassService : IClassService
     {
@@ -24,9 +24,9 @@ namespace LMSSolution.Application.Class
 
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CourseCreateRequest, Data.Entities.Course>();
-                cfg.CreateMap<CourseEditRequest, Data.Entities.Course>();
-                cfg.CreateMap<Data.Entities.Course, CourseViewModel>();
+                cfg.CreateMap<CourseCreateRequest, Course>();
+                cfg.CreateMap<CourseEditRequest, Course>();
+                cfg.CreateMap<Course, CourseViewModel>();
             });
 
             _mapper = config.CreateMapper();

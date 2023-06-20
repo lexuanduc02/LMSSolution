@@ -1,4 +1,4 @@
-﻿using LMSSolution.Application.Class;
+﻿using LMSSolution.Application.Classes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

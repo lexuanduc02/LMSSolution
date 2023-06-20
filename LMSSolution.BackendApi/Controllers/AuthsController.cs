@@ -1,4 +1,4 @@
-﻿using LMSSolution.Application.Auth;
+﻿using LMSSolution.Application.Auths;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

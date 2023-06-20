@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
-namespace LMSSolution.Application.Course
+namespace LMSSolution.Application.Courses
 {
     public class CourseService : ICourseService
     {
@@ -23,15 +23,15 @@ namespace LMSSolution.Application.Course
 
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CourseCreateRequest, Data.Entities.Course>();
+                cfg.CreateMap<CourseCreateRequest, Course>();
 
-                cfg.CreateMap<CourseEditRequest, Data.Entities.Course>();
+                cfg.CreateMap<CourseEditRequest, Course>();
 
-                cfg.CreateMap<Data.Entities.Course, CourseViewModel>();
+                cfg.CreateMap<Course, CourseViewModel>();
 
-                cfg.CreateMap<Data.Entities.Course, CourseDetailViewModel>();
+                cfg.CreateMap<Course, CourseDetailViewModel>();
 
-                cfg.CreateMap<Data.Entities.Class, ClassViewModel>();
+                cfg.CreateMap<Class, ClassViewModel>();
 
                 cfg.CreateMap<User, UserViewModel>();
             });

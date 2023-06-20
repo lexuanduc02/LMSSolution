@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LMSSolution.Application.Course;
+using LMSSolution.Application.Courses;
 using LMSSolution.ViewModels.Course;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

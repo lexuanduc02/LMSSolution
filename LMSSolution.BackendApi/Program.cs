@@ -1,8 +1,7 @@
-using FluentValidation;
 using FluentValidation.AspNetCore;
-using LMSSolution.Application.Auth;
-using LMSSolution.Application.Class;
-using LMSSolution.Application.Course;
+using LMSSolution.Application.Auths;
+using LMSSolution.Application.Classes;
+using LMSSolution.Application.Courses;
 using LMSSolution.Application.Majors;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
@@ -10,13 +9,10 @@ using LMSSolution.Utilities.Constants;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

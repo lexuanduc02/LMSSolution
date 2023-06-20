@@ -24,11 +24,11 @@ namespace LMSSolution.Application.Majors
                 cfg.CreateMap<Major, MajorViewModel>();
                 cfg.CreateMap<Major, MajorDetailViewModel>();
                 cfg.CreateMap<MajorEditRequest, Major>();
-                cfg.CreateMap<Data.Entities.Class, ClassViewModel>();
+                cfg.CreateMap<Class, ClassViewModel>();
                 cfg.CreateMap<User, TeacherViewModel>();
                 cfg.CreateMap<SubjectMajor, SubjectMajorViewModel>();
                 cfg.CreateMap<Subject, SubjectViewModel>();
-                cfg.CreateMap<Data.Entities.Course, ViewModels.Major.CourseViewModel>();
+                cfg.CreateMap<Course, ViewModels.Major.CourseViewModel>();
             });
 
             _mapper = config.CreateMapper();

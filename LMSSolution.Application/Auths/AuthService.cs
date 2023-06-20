@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace LMSSolution.Application.Auth
+namespace LMSSolution.Application.Auths
 {
     public class AuthService : IAuthService
     {

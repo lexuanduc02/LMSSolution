@@ -1,5 +1,4 @@
-﻿using LMSSolution.Data.Entities;
-using LMSSolution.ViewModels.Common;
+﻿using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Major;
 
 namespace LMSSolution.Application.Majors
