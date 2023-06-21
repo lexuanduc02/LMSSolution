@@ -20,23 +20,18 @@ namespace LMSSolution.Application.Subjects
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<SubjectCreateRequest, Subject>();
-
                 cfg.CreateMap<SubjectMajorViewModel, SubjectMajor>();
-
                 cfg.CreateMap<Subject, SubjectViewModel>();
-
                 cfg.CreateMap<Subject, SubjectDetailViewModel>();
+                cfg.CreateMap<Major, MajorDto>();
+                cfg.CreateMap<User, TeacherDto>();
+                cfg.CreateMap<SubjectEditRequest, Subject>();
 
                 cfg.CreateMap<SubjectMajor, SubjectMajorDto>()
                     .ForMember(dest => dest.MajorInfor, opt => opt.MapFrom(src => src.Major));
 
-                cfg.CreateMap<Major, MajorDto>();
-
                 cfg.CreateMap<TeacherSubject, TeacherSubjectDto>()
                     .ForMember(dest => dest.TeacherInfor, opt => opt.MapFrom(src => src.Teacher));
-
-                cfg.CreateMap<User, TeacherDto>();
-
             });
 
             _mapper = config.CreateMapper();
@@ -93,9 +88,28 @@ namespace LMSSolution.Application.Subjects
             return new ApiSuccessResult<bool>();
         }
 
-        public Task<ApiResult<bool>> Edit(SubjectEditRequest request)
+        public async Task<ApiResult<bool>> Edit(SubjectEditRequest request)
         {
-            throw new NotImplementedException();
+            var subject = await _context.Subjects.FindAsync(request.Id);
+
+            if(subject == null)
+            {
+                return new ApiErrorResult<bool>("Không tìm thấy môn học!");
+            }
+
+            _mapper.Map(request, subject);
+
+            try
+            {
+                _context.Subjects.Update(subject);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return new ApiErrorResult<bool>("Xóa không thành công!");
+            }
+
+            return new ApiSuccessResult<bool>();
         }
 
         public async Task<ApiResult<PagedResult<SubjectViewModel>>> GetAllSubjectPaging(GetSubjectPagingRequest request)

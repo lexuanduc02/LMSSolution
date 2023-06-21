@@ -8,5 +8,8 @@ namespace LMSSolution.ViewModels.Subject
 {
     public class SubjectEditRequest
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int NumberOfLesson { get; set; }
     }
 }
