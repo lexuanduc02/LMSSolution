@@ -3,6 +3,7 @@ using LMSSolution.Application.Auths;
 using LMSSolution.Application.Classes;
 using LMSSolution.Application.Courses;
 using LMSSolution.Application.Majors;
+using LMSSolution.Application.Subjects;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
 using LMSSolution.Utilities.Constants;
@@ -107,6 +108,7 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<ICourseService, CourseService>();
 builder.Services.AddTransient<IClassService, ClassService>();
 builder.Services.AddTransient<IMajorService, MajorService>();
+builder.Services.AddTransient<ISubjectService, SubjectService>();
 
 var app = builder.Build();
 
