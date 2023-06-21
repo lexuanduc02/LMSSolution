@@ -66,25 +66,17 @@ namespace LMSSolution.Application.Majors
                 return new ApiErrorResult<bool>("Chuyên ngành không tồn tại!");
             }
 
-            var cl = await _context.Classes.FirstOrDefaultAsync(x => x.CourseId == major.Id);
-            var sm = await _context.SubjectsMajor.FirstOrDefaultAsync(x => x.MajorId == major.Id);
-            var st = await _context.Users.FirstOrDefaultAsync(x => x.MajorId == major.Id);
-
-            if (cl != null || sm != null || st != null)
+            try
             {
-                return new ApiErrorResult<bool>($"Không thể xóa chuyên ngành {major.Name}!");
+                _context.Majors.Remove(major);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return new ApiErrorResult<bool>("Xóa không thành công");
             }
 
-            _context.Majors.Remove(major);
-
-            var result = await _context.SaveChangesAsync();
-
-            if (result > 0)
-            {
-                return new ApiSuccessResult<bool>();
-            }
-
-            return new ApiErrorResult<bool>("Xóa không thành công!");
+            return new ApiSuccessResult<bool>();
         }
 
         public async Task<ApiResult<bool>> Edit(MajorEditRequest request)
@@ -169,20 +161,5 @@ namespace LMSSolution.Application.Majors
 
             return new ApiSuccessResult<MajorDetailViewModel>(data);
         }
-
-        //public async Task<ApiResult<Major>> GetMajorDetailById(int Id)
-        //{
-        //    var major = await _context.Majors
-        //        .Include(m => m.SubjectMajors).ThenInclude(sm => sm.Subject)
-        //        .Include(m => m.Classes).ThenInclude(cl => cl.Teacher)
-        //        .FirstOrDefaultAsync(m => m.Id == Id);
-
-        //    if (major == null)
-        //    {
-        //        return new ApiErrorResult<Major>("Khóa không tồn tại!");
-        //    }
-
-        //    return new ApiSuccessResult<Major>(major);
-        //}
     }
 }
