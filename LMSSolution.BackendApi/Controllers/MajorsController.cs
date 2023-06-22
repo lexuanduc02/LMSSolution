@@ -25,6 +25,14 @@ namespace LMSSolution.BackendApi.Controllers
             return Ok(users.ResultObject);
         }
 
+        //https://localhost:<port>/users/paging?pageIndex=1&pagesize=10
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
+        {
+            var data = await _majorService.GetAllMajor();
+            return Ok(data);
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] MajorCreateRequest request)
         {

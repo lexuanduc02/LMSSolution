@@ -27,7 +27,7 @@ namespace LMSSolution.BackendApi.Controllers
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] SubjectCreateRequest request)
-        {
+        {  
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
