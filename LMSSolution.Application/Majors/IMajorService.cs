@@ -11,5 +11,6 @@ namespace LMSSolution.Application.Majors
         Task<ApiResult<bool>> Delete(int Id);
         Task<ApiResult<bool>> Create(MajorCreateRequest request);
         Task<ApiResult<PagedResult<MajorViewModel>>> GetAllMajorPaging(GetMajorPagingRequest request);
+        Task<List<MajorViewModel>> GetAllMajor();
     }
 }

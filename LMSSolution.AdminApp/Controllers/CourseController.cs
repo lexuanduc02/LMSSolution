@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Azure.Core;
 using LMSSolution.ApiIntegration.Course;
-using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -45,7 +44,9 @@ namespace LMSSolution.AdminApp.Controllers
                 ViewBag.ResultMessage = TempData["result"];
             }
 
-            return View(result.ResultObject);
+            var data = result.ResultObject;
+
+            return View(data);
         }
 
         [HttpGet]

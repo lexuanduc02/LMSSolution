@@ -1,0 +1,35 @@
+﻿@using LMSSolution.ViewModels.Subject
+@model SubjectCreateRequest
+@{
+    ViewData["Title"] = "Thêm môn học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="Create" asp-controller="Subject">
+    <div class="form-group row mb-3">
+        <label asp-for="Name" class="col-3 col-form-label">Tên môn</label>
+        <div class="col-9">
+            <input type="text" asp-for="Name" class="form-control" placeholder="Tên môn ">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="NumberOfLesson" class="col-3 col-form-label">Số tiết học</label>
+        <div class="col-9">
+            <input data-toggle="touchspin" type="text" value="0" asp-for="NumberOfLesson">
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="MajorId" class="col-3 col-form-label">Chuyên ngành</label>
+        <div class="col-9">
+            <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Chọn chuyên ngành thuộc môn học ....." asp-for="MajorId" asp-items="@ViewBag.MajorSli">
+            </select>
+        </div>
+    </div>
+    <div class="form-group mb-0 justify-content-end row">
+        <div class="col-9">
+            <button type="submit" class="btn btn-info">Thêm mới</button>
+        </div>
+    </div>
+</form>
+

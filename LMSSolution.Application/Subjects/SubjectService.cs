@@ -5,6 +5,7 @@ using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Subject;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Linq;
 
 namespace LMSSolution.Application.Subjects
 {
@@ -20,7 +21,6 @@ namespace LMSSolution.Application.Subjects
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<SubjectCreateRequest, Subject>();
-                cfg.CreateMap<SubjectMajorViewModel, SubjectMajor>();
                 cfg.CreateMap<Subject, SubjectViewModel>();
                 cfg.CreateMap<Subject, SubjectDetailViewModel>();
                 cfg.CreateMap<Major, MajorDto>();
@@ -48,22 +48,41 @@ namespace LMSSolution.Application.Subjects
 
             var major = await _context.Majors.Select(x => x.Id).ToListAsync();
 
-            var majorSli = request.SubjectMajors;
+            var majorSli = request.MajorId;
 
-            majorSli.RemoveAll(m => !major.Contains(m.MajorId));
+            majorSli.RemoveAll(m => !major.Contains(m));
 
-            var dto = _mapper.Map(request, new Subject());
-
-            _context.Subjects.Add(dto);
-
-            var result = await _context.SaveChangesAsync();
-
-            if (result > 0)
+            var newSubject = new Subject()
             {
-                return new ApiSuccessResult<bool>();
+                Name = request.Name,
+                NumberOfLesson = (int)request.NumberOfLesson,
+                SubjectMajors = majorSli.Select(x => new SubjectMajor
+                {
+                    MajorId = x,
+                }).ToList(),
+            };
+
+            //newSubject.SubjectMajors = new List<SubjectMajor>();
+
+            //foreach (var item in request.MajorId)
+            //{
+            //    newSubject.SubjectMajors.Add(new SubjectMajor
+            //    {
+            //        MajorId = item,
+            //    });
+            //}
+
+            try
+            {
+                _context.Subjects.Add(newSubject);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return new ApiErrorResult<bool>("Thêm mới thất bại");
             }
 
-            return new ApiErrorResult<bool>("Thêm mới thất bại");
+            return new ApiSuccessResult<bool>();
         }
 
         public async Task<ApiResult<bool>> Delete(int Id)
@@ -160,15 +179,5 @@ namespace LMSSolution.Application.Subjects
 
             return new ApiSuccessResult<SubjectDetailViewModel>(data);
         }
-
-        //public async Task<Subject> GetSubjectDetailById1(int Id)
-        //{
-        //    var subject = await _context.Subjects
-        //        .Include(s => s.TeacherSubjects).ThenInclude(ts => ts.Teacher)
-        //        .Include(s => s.SubjectMajors).ThenInclude(sm => sm.Major)
-        //        .FirstOrDefaultAsync(s => s.Id == Id);
-
-        //    return subject;
-        //}
     }
 }

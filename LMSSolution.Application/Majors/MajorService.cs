@@ -102,6 +102,15 @@ namespace LMSSolution.Application.Majors
             return new ApiErrorResult<bool>("Cập nhật thất bại!");
         }
 
+        public async Task<List<MajorViewModel>> GetAllMajor()
+        {
+            var data = await _context.Majors
+                        .Select(x => _mapper.Map<MajorViewModel>(x))
+                        .ToListAsync();
+
+            return new List<MajorViewModel>(data);
+        }
+
         public async Task<ApiResult<PagedResult<MajorViewModel>>> GetAllMajorPaging(GetMajorPagingRequest request)
         {
             var query = _context.Majors.AsQueryable();
