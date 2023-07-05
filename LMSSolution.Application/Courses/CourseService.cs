@@ -41,7 +41,7 @@ namespace LMSSolution.Application.Courses
 
         public async Task<ApiResult<bool>> Create(CourseCreateRequest request)
         {
-            var course = new Data.Entities.Course();
+            var course = new Course();
 
             _mapper.Map(request, course);
 

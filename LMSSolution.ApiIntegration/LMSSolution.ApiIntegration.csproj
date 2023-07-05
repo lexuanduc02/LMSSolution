@@ -15,4 +15,8 @@
     <ProjectReference Include="..\LMSSolution.ViewModel\LMSSolution.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Class\" />
+  </ItemGroup>
+
 </Project>

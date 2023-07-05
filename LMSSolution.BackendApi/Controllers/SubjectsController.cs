@@ -25,6 +25,13 @@ namespace LMSSolution.BackendApi.Controllers
             return Ok(users.ResultObject);
         }
 
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _subjectService.GetAllSubject();
+            return Ok(users.ResultObject);
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] SubjectCreateRequest request)
         {  

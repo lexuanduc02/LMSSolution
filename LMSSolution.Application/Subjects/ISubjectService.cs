@@ -11,5 +11,6 @@ namespace LMSSolution.Application.Subjects
         Task<ApiResult<bool>> Delete(int Id);
         Task<ApiResult<bool>> Create(SubjectCreateRequest request);
         Task<ApiResult<PagedResult<SubjectViewModel>>> GetAllSubjectPaging(GetSubjectPagingRequest request);
+        Task<ApiResult<List<SubjectViewModel>>> GetAllSubject();
     }
 }

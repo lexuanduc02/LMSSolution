@@ -1,4 +1,6 @@
-﻿using LMSSolution.Application.Systems.Users.Teachers;
+﻿using LMSSolution.Application.Classes;
+using LMSSolution.Application.Subjects;
+using LMSSolution.Application.Systems.Users.Teachers;
 using LMSSolution.ViewModels.System.Teacher;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

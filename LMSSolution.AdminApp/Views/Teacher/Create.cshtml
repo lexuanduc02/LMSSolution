@@ -1,0 +1,70 @@
+﻿@using LMSSolution.ViewModels.System.Teacher
+@model TeacherCreateRequest
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="Create" asp-controller="Teacher">
+    <div class="form-group row mb-3">
+        <label asp-for="UserName" class="col-3 col-form-label">Username</label>
+        <div class="col-9">
+            <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="FirstName" class="col-3 col-form-label">First Name</label>
+        <div class="col-9">
+            <input type="text" asp-for="FirstName" class="form-control" placeholder="First Name ">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="LastName" class="col-3 col-form-label">Last Name</label>
+        <div class="col-9">
+            <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name ">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Email" class="col-3 col-form-label">Email</label>
+        <div class="col-9">
+            <input type="text" asp-for="Email" class="form-control" placeholder="Email ">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Password" class="col-3 col-form-label">Password</label>
+        <div class="col-9">
+            <input type="password" asp-for="Password" class="form-control" placeholder="Password">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="PhoneNumber" class="col-3 col-form-label">Phone Number</label>
+        <div class="col-9">
+            <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="Phone number">
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <label asp-for="Dob" class="col-3 col-form-label">Birthday</label>
+        <div class="col-9">
+            <input type="text" asp-for="Dob" class="form-control" placeholder="Your date of birth" data-provide="datepicker">
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="SubjectIds" class="col-3 col-form-label">Môn học giảng dạy</label>
+        <div class="col-9">
+            <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Chọn môn học giảng dạy ....." asp-for="SubjectIds" asp-items="@ViewBag.SubjectSli">
+            </select>
+        </div>
+    </div>
+    <div class="form-group mb-0 justify-content-end row">
+        <div class="col-9">
+            <button type="submit" class="btn btn-info">Thêm mới</button>
+        </div>
+    </div>
+</form>
