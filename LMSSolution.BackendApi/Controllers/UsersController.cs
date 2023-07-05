@@ -1,11 +1,13 @@
 ﻿using LMSSolution.Application.Systems.Users.Teachers;
 using LMSSolution.ViewModels.System.Teacher;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMSSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class UsersController : ControllerBase
     {
         private readonly ITeacherService _teacherService;

@@ -3,6 +3,7 @@ using LMSSolution.ApiIntegration.Auth;
 using LMSSolution.ApiIntegration.Course;
 using LMSSolution.ApiIntegration.Major;
 using LMSSolution.ApiIntegration.Subject;
+using LMSSolution.ApiIntegration.System.Teacher;
 using LMSSolution.Application.Subjects;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -34,6 +35,7 @@ builder.Services.AddTransient<IAuthApiClient, AuthApiClient>();
 builder.Services.AddTransient<ICourseApiClient, CourseApiClient>();
 builder.Services.AddTransient<ISubjectApiClient, SubjectApiClient>();
 builder.Services.AddTransient<IMajorApiClient, MajorApiClient>();
+builder.Services.AddTransient<ITeacherApiClient, TeacherApiClient>();
 
 //Add Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
