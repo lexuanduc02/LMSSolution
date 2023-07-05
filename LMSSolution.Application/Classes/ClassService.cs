@@ -48,7 +48,7 @@ namespace LMSSolution.Application.Classes
             var data = await query.Select(x => new ClassViewModel()
             {
                 Id = x.c.Id,
-                Name = x.c.Name,
+                Name = x.c.Name
             }).ToListAsync();
 
             return new ApiSuccessResult<List<ClassViewModel>>(data);

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMSSolution.ViewModels.System.Offices
+namespace LMSSolution.ViewModels.System.UserBase
 {
-    public class GetOfficerPagingRequest : PagingRequestBase
+    public class GetUserPagingRequest : PagingRequestBase
     {
         public string? KeyWord { get; set; }
     }

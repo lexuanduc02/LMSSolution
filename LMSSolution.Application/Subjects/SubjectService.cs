@@ -5,7 +5,6 @@ using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Subject;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
 
 namespace LMSSolution.Application.Subjects
 {
@@ -61,16 +60,6 @@ namespace LMSSolution.Application.Subjects
                     MajorId = x,
                 }).ToList(),
             };
-
-            //newSubject.SubjectMajors = new List<SubjectMajor>();
-
-            //foreach (var item in request.MajorId)
-            //{
-            //    newSubject.SubjectMajors.Add(new SubjectMajor
-            //    {
-            //        MajorId = item,
-            //    });
-            //}
 
             try
             {

@@ -4,6 +4,7 @@ using LMSSolution.Application.Classes;
 using LMSSolution.Application.Courses;
 using LMSSolution.Application.Majors;
 using LMSSolution.Application.Subjects;
+using LMSSolution.Application.Systems.Users.Teachers;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
 using LMSSolution.Utilities.Constants;
@@ -26,10 +27,6 @@ builder.Services.AddDbContext<LMSDbContext>(options =>
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-//builder.Services.AddControllers(options =>
-//{
-//    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-//});
 
 builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
@@ -109,6 +106,7 @@ builder.Services.AddTransient<ICourseService, CourseService>();
 builder.Services.AddTransient<IClassService, ClassService>();
 builder.Services.AddTransient<IMajorService, MajorService>();
 builder.Services.AddTransient<ISubjectService, SubjectService>();
+builder.Services.AddTransient<ITeacherService, TeacherService>();
 
 var app = builder.Build();
 

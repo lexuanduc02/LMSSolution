@@ -4,7 +4,7 @@ using LMSSolution.Data.Entities;
 using LMSSolution.ViewModels.Class;
 using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Course;
-using LMSSolution.ViewModels.User;
+using LMSSolution.ViewModels.System.User;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
