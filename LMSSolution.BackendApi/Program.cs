@@ -72,31 +72,45 @@ string singingKey = builder.Configuration.GetValue<string>("JwtSettings:Key");
 byte[] signingKeyBytes = Encoding.UTF8.GetBytes(singingKey);
 
 builder.Services.AddAuthentication(opt =>
-{
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(opts =>
-{
-    opts.RequireHttpsMetadata = false;
-    opts.SaveToken = true;
-    opts.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidIssuer = issuer,
-        ValidAudience = audience,
-        IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = false,
-        ValidateIssuerSigningKey = true,
-    };
-});
+                {
+                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(opts =>
+                {
+                    opts.RequireHttpsMetadata = false;
+                    opts.SaveToken = true;
+                    opts.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = issuer,
+                        ValidAudience = audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = false,
+                        ValidateIssuerSigningKey = true,
+                    };
+                });
 
     //Add Identity
 builder.Services.AddDefaultIdentity<User>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<LMSDbContext>()
     .AddDefaultTokenProviders();
+
+    //Enable CORS
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7104")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+        });
+});
 
 //Declare DI
 builder.Services.AddTransient<UserManager<User>, UserManager<User>>();
@@ -130,9 +144,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 
