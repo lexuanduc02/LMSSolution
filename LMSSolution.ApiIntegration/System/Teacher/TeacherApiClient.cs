@@ -24,9 +24,25 @@ namespace LMSSolution.ApiIntegration.System.Teacher
             _configuration = configuration;
         }
 
-        public Task<ApiResult<bool>> Create(TeacherCreateRequest request)
+        public async Task<ApiResult<bool>> Create(TeacherCreateRequest request)
         {
-            throw new NotImplementedException();
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddressUri"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("LoginToken"));
+
+            var response = await client.PostAsync($"/api/users/teacher/create", httpContent);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new ApiSuccessResult<bool>();
+            };
+
+            return new ApiErrorResult<bool>(result);
         }
 
         public Task<ApiResult<bool>> Delete(Guid Id)

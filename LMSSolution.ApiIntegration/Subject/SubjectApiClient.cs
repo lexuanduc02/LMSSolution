@@ -54,6 +54,23 @@ namespace LMSSolution.ApiIntegration.Subject
             throw new NotImplementedException();
         }
 
+        public async Task<List<SubjectViewModel>> GetAllSubject()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddressUri"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("LoginToken"));
+
+            var response = await client.GetAsync($"api/subjects/all");
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<SubjectViewModel>>(result);
+            }
+
+            return JsonConvert.DeserializeObject<List<SubjectViewModel>>(result);
+        }
+
         public async Task<ApiResult<PagedResult<SubjectViewModel>>> GetAllSubjectPaging(GetSubjectPagingRequest request)
         {
             var client = _httpClientFactory.CreateClient();

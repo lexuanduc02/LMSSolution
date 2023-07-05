@@ -2,7 +2,6 @@
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
 using LMSSolution.ViewModels.Common;
-using LMSSolution.ViewModels.Subject;
 using LMSSolution.ViewModels.System.Teacher;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,13 +43,20 @@ namespace LMSSolution.Application.Systems.Users.Teachers
                 return new ApiErrorResult<bool>("Người dùng đã tồn tại");
             }
 
-            var classes = await _context.Classes.Select(x => x.Id).ToListAsync();
-            var classSli = request.ClassIds;
-            classSli.RemoveAll(c => !classes.Contains(c));
-
             var newTeacher = new User();
-            
             _mapper.Map(request, newTeacher);
+
+            if (request.SubjectIds != null)
+            {
+                var subjects = await _context.Subjects.Select(x => x.Id).ToListAsync();
+                var subjectSli = request.SubjectIds;
+                subjectSli.RemoveAll(s => !subjects.Contains(s));
+
+                newTeacher.TeacherSubjects = subjectSli.Select(x => new TeacherSubject
+                {
+                    SubjectId = x,
+                }).ToList();
+            }
 
             var result = await _userManager.CreateAsync(newTeacher, request.Password);
 
@@ -58,10 +64,17 @@ namespace LMSSolution.Application.Systems.Users.Teachers
             {
                 await _userManager.AddToRoleAsync(newTeacher, "Teacher");
 
-                foreach(var item in classSli)
+                if (request.ClassIds != null)
                 {
-                    await ClassAssign(item, newTeacher.Id);
-                }    
+                    var classes = await _context.Classes.Select(x => x.Id).ToListAsync();
+                    var classSli = request.ClassIds;
+                    classSli.RemoveAll(c => !classes.Contains(c));
+
+                    foreach (var item in classSli)
+                    {
+                        await ClassAssign(item, newTeacher.Id);
+                    }
+                }
 
                 return new ApiSuccessResult<bool>();
             }

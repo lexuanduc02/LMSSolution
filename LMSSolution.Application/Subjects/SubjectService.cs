@@ -120,6 +120,15 @@ namespace LMSSolution.Application.Subjects
             return new ApiSuccessResult<bool>();
         }
 
+        public async Task<ApiResult<List<SubjectViewModel>>> GetAllSubject()
+        {
+            var data = await _context.Subjects
+            .Select(x => _mapper.Map<SubjectViewModel>(x))
+            .ToListAsync();
+
+            return new ApiSuccessResult<List<SubjectViewModel>>(data);
+        }
+
         public async Task<ApiResult<PagedResult<SubjectViewModel>>> GetAllSubjectPaging(GetSubjectPagingRequest request)
         {
             var query = _context.Subjects.AsQueryable();
