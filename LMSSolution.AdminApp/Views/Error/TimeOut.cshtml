@@ -1,0 +1,68 @@
+﻿﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Session expired</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/images/favicon_hou.ico">
+
+    <!-- App css -->
+    <link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/app-creative.min.css" rel="stylesheet" type="text/css" id="light-style" />
+
+</head>
+
+<body class="authentication-bg" data-layout-config='{"darkMode":false}'>
+
+    <div class="account-pages mt-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card">
+                        <!-- Logo -->
+                        <div class="card-header pt-4 pb-4 text-center bg-primary">
+                            <a href="index.html">
+                                <span><img src="/images/logo.png" alt="" height="18"></span>
+                            </a>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center">
+                                <img src="/images/startman.svg" height="120" alt="File not found Image">
+
+                                <h1 class="text-error mt-4">OOPS</h1>
+                                <h4 class="text-uppercase text-danger mt-3">Login session has expired</h4>
+                                <p class="text-muted mt-3">Why not try logging in again? or you can contact <a href="" class="text-muted"><b>Support</b></a></p>
+
+                                <a class="btn btn-info mt-3" asp-action="Login" asp-controller="Auth"><i class="mdi mdi-reply mr-1"></i>Log In</a>
+                            </div>
+
+                        </div> <!-- end card-body-->
+                    </div>
+                    <!-- end card-->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    <footer class="footer footer-alt">
+        HOU LMS - HOU Learning Management System
+    </footer>
+
+    <!-- bundle -->
+    <script src="/js/vendor.min.js"></script>
+    <script src="/js/app.min.js"></script>
+
+</body>
+</html>

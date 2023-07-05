@@ -1,0 +1,103 @@
+﻿@using LMSSolution.ViewModels.Course
+@using LMSSolution.ViewModels.Common
+@model PagedResult<CourseViewModel>
+@{
+    ViewData["Title"] = "Quản lý khóa học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a asp-action="Create" asp-controller="Course" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>Tạo khóa mới</a>
+                    </div>
+                    <div class="col-sm-6 app-search">
+                        <form style="max-width: 400px" class="float-right">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" id="PageSize" name="PageSize" asp-items="@ViewBag.PageSize" onchange="this.form.submit()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search..." name="KeyWord" value="@ViewBag.KeyWord">
+                                        <span class="mdi mdi-magnify search-icon"></span>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- end col-->
+                </div>
+                <div class="table-responsive">
+                    <div id="products-datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100 dataTable no-footer dtr-inline" id="products-datatable" role="grid" aria-describedby="products-datatable_info">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên khóa</th>
+                                            <th>Mô tả</th>
+                                            <th>Bắt đầu</th>
+                                            <th>Kết thúc</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Items)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.StartDate.Year)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.EndDate.Year)</td>
+                                                <td class="table-action">
+                                                    <a href="@Url.Action("Detail", "Course", new { id = item.Id })" class="action-icon"><i class="mdi mdi-account-details-outline"></i></a>
+                                                    <a href="@Url.Action("Update", "Course", new { id = item.Id })" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>
+                                                    <a href="@Url.Action("Delete", "Course", new { id = item.Id })" class="action-icon"><i class="mdi mdi-delete"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                @await Component.InvokeAsync("Pager", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
+
+@section js {
+    <script>
+        setTimeout(function () {
+            $('.toast').fadeOut('slow')
+        }, 2000);
+    </script>
+
+    @if (ViewBag.ResultMessage != null)
+    {
+        <script>
+        $.toast({
+            heading: 'Success',
+            text: '@ViewBag.ResultMessage',
+            showHideTransition: 'slide',
+            icon: 'success',
+            hideAfter: '3000',
+            showHideTransition: 'fade',
+            stack: 5,
+            position: 'top-right',
+            bgColor: '#42d29d',
+        })
+        </script>
+    }
+}
+

@@ -1,0 +1,81 @@
+﻿@using LMSSolution.ViewModels.Course
+@model CourseDetailViewModel
+@{
+    ViewData["Title"] = "Khóa " + Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="border p-3 mt-4 mt-lg-0 rounded">
+                            <h4 class="header-title mb-3">Thông tin</h4>
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td>Mô tả :</td>
+                                            <td>@Model.Description</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Năm bắt đầu : </td>
+                                            <td>@Model.StartDate</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Năm kết thúc :</td>
+                                            <td>@Model.EndDate</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Số lớp : </td>
+                                            <td>@Model.Classes.Count()</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end table-responsive -->
+                        </div>
+                    </div> <!-- end col -->
+                    <div class="col-lg-8">
+                        <div class="border p-3 mt-4 mt-lg-0 rounded"> 
+                            <h4 class="header-title mb-3">Danh sách lớp</h4>
+                            <div class="table-responsive">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100 dataTable no-footer dtr-inline" id="products-datatable" role="grid" aria-describedby="products-datatable_info">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã lớp</th>
+                                            <th>Tên lớp</th>
+                                            <th>Cố vẫn học tập</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Classes)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td>
+                                                    <a href="@Url.Action("Profile", "User", new { id = item.Teacher.Id })" class="action-icon" style="font-size: 16px;">
+                                                        @Html.DisplayFor(modelItem => item.Teacher.FullName)
+                                                    </a>
+                                                </td>
+                                                <td class="table-action">
+                                                    <a href="@Url.Action("Detail", "Class", new { id = item.Id })" class="action-icon"><i class="mdi mdi-account-details-outline"></i></a>
+                                                    <a href="@Url.Action("Update", "Class", new { id = item.Id })" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div> <!-- end table-responsive-->
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div> <!-- end row -->
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
+
