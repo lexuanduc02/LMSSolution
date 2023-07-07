@@ -98,7 +98,13 @@ builder.Services.AddDefaultIdentity<User>()
     .AddEntityFrameworkStores<LMSDbContext>()
     .AddDefaultTokenProviders();
 
-    //Enable CORS
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireOfficerRole",
+         policy => policy.RequireRole("Officer"));
+});
+
+//Enable CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>

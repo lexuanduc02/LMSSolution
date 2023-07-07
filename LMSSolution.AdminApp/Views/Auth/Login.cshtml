@@ -38,13 +38,13 @@
                             <form asp-action="Login" asp-controller="Auth">
                                 <input type="hidden" asp-for="ReturnUrl" value="@(Context.Request.Query["ReturnUrl"])">
                                 <div class="form-group">
-                                    <label asp-for="Email">Email : </label>
+                                    <label asp-for="Email">Email</label>
                                     <input type="text" class="form-control" asp-for="Email" placeholder="Điền Email">
                                     <div class="mt-1"><span asp-validation-for="Email" class="text-danger"></span></div>
                                 </div>
                                 <div class="form-group">
                                     <a href="pages-recoverpw.html" class="text-muted float-right"><small>Bạn quên mật khâir?</small></a>
-                                    <label asp-for="Password">Mật khẩu : </label>
+                                    <label asp-for="Password">Mật khẩu</label>
                                     <div class="input-group input-group-merge">
                                         <input type="password" asp-for="Password" class="form-control" placeholder="Điền mật khẩu">
                                         <div class="input-group-append" data-password="false">
@@ -55,7 +55,16 @@
                                     </div>
                                     <div class="mt-1"><span asp-validation-for="Password" class="text-danger"></span></div>
                                 </div>
-                                <div asp-validation-summary="ModelOnly" class="text-center text-danger w-75 ml-3"></div>
+
+                                @{
+                                    if (ViewData.ModelState.Keys.Contains("LoginFailed"))
+                                    {
+                                        <div class="text-danger text-center mb-1">
+                                            @Html.ValidationMessage("LoginFailed")
+                                        </div>
+                                    }
+                                }
+
                                 <div class="form-group mb-3">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" asp-for="RememberMe">
@@ -70,7 +79,6 @@
                     </div>
                     <!-- end card -->
                     <!-- end row -->
-
                 </div> <!-- end col -->
             </div>
             <!-- end row -->

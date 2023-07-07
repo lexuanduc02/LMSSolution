@@ -4,7 +4,6 @@ using LMSSolution.ApiIntegration.Course;
 using LMSSolution.ApiIntegration.Major;
 using LMSSolution.ApiIntegration.Subject;
 using LMSSolution.ApiIntegration.System.Teacher;
-using LMSSolution.Application.Subjects;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -41,6 +40,7 @@ builder.Services.AddTransient<ITeacherApiClient, TeacherApiClient>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
+        options.LogoutPath = "/Auth/Logout";
         options.LoginPath = "/Auth/Login/";
         options.AccessDeniedPath = "/Auth/AccessDenied/";
     });

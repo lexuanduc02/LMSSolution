@@ -1,6 +1,7 @@
 ﻿using LMSSolution.Application.Majors;
 using LMSSolution.ViewModels.Course;
 using LMSSolution.ViewModels.Major;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
