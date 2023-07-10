@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using LMSSolution.Utilities.Enums;
 
 namespace LMSSolution.Data.Entities
 {
@@ -12,6 +9,7 @@ namespace LMSSolution.Data.Entities
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public CreditClassStatusEnum Status { get; set; }
 
         public int SubjectId { get; set; }
         public Subject Subject { get; set; }
