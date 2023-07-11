@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LMSSolution.ViewModels.Common;
 
 namespace LMSSolution.ViewModels.CreditClass
 {
-    public class GetCreditClassPagingRequest
+    public class GetCreditClassPagingRequest : PagingRequestBase
     {
+        public string? KeyWord { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

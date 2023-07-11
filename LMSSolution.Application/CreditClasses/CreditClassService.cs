@@ -19,6 +19,8 @@ namespace LMSSolution.Application.CreditClasses
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CreditClassCreateRequest, CreditClass>();
+                cfg.CreateMap<CreditClass, CreditClassViewModel>();
+                cfg.CreateMap<Subject, SubjectDto>();
             });
 
             _mapper = config.CreateMapper();
@@ -76,9 +78,41 @@ namespace LMSSolution.Application.CreditClasses
             throw new NotImplementedException();
         }
 
-        public Task<ApiResult<PagedResult<CreditClassViewModel>>> GetAllCreditClassPaging(GetCreditClassPagingRequest request)
+        public async Task<ApiResult<PagedResult<CreditClassViewModel>>> GetAllCreditClassPaging(GetCreditClassPagingRequest request)
         {
-            throw new NotImplementedException();
+            var query = _context.CreditClasses.Include(x => x.Subject).AsQueryable();
+
+            //filter by KeyWord
+            if (!string.IsNullOrEmpty(request.KeyWord))
+            {
+                query = query.Where(x => x.Name.Contains(request.KeyWord) || x.Name.Contains(request.KeyWord));
+            }
+
+            if(request.StartDate != null)
+            {
+                query = query.Where(x => x.StartDate >= request.StartDate);
+            }
+
+            if (request.EndDate != null)
+            {
+                query = query.Where(x => x.EndDate <= request.EndDate);
+            }
+
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                                .Take(request.PageSize)
+                                .OrderByDescending(c => c.Name)
+                                .Select(c => _mapper.Map(c, new CreditClassViewModel()))
+                                .ToListAsync();
+
+            var pagedResult = new PagedResult<CreditClassViewModel>()
+            {
+                TotalRecords = query.Count(),
+                Items = data,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            return new ApiSuccessResult<PagedResult<CreditClassViewModel>>(pagedResult);
         }
 
         public Task<ApiResult<CreditClassViewModel>> GetCreditClassById(int Id)
@@ -89,6 +123,43 @@ namespace LMSSolution.Application.CreditClasses
         public Task<ApiResult<CreditClassDetailViewModel>> GetCreditClassDetailById(int Id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ApiResult<bool>> TeachingAssign(TeachingAssignRequest request)
+        {
+            var creditClass = await _context.CreditClasses.FindAsync(request.CreditClassId);
+
+            if(creditClass == null)
+            {
+                return new ApiErrorResult<bool>("Lớp tín chỉ không tồn tại");
+            }
+
+            var lessons = new List<Lesson>();
+
+            for (var date = creditClass.StartDate; date <= creditClass.EndDate; date = date.AddDays(7))
+            {
+                lessons.Add(new Lesson()
+                {
+                    Date = date,
+                    Status = Data.Enum.LessonStatusEnum.Study,
+                    StadyShiffId = request.StadyShiffId,
+                    CreditClassId = request.CreditClassId,
+                    TeacherId = request.TeacherId,
+                });
+            }
+
+            try
+            {
+                await _context.Lessons.AddRangeAsync(lessons);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+
+                return new ApiErrorResult<bool>("Phân công thất bại");
+            }
+
+            return new ApiSuccessResult<bool>();
         }
     }
 }

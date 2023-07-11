@@ -1,6 +1,7 @@
 ﻿using LMSSolution.Application.CreditClasses;
 using LMSSolution.Application.Subjects;
 using LMSSolution.Application.Systems.Users.Teachers;
+using LMSSolution.ViewModels.Course;
 using LMSSolution.ViewModels.CreditClass;
 using LMSSolution.ViewModels.Major;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,26 @@ namespace LMSSolution.BackendApi.Controllers
             }
 
             var result = await _creditClassService.Create(request);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(result);
+        } 
+
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetCreditClassPagingRequest request)
+        {
+            var result = await _creditClassService.GetAllCreditClassPaging(request);
+            return Ok(result.ResultObject);
+        }
+
+        [HttpPost("TeachingAssign")]
+        public async Task<IActionResult> TeachingAssign([FromBody] TeachingAssignRequest request)
+        {
+            var result = await _creditClassService.TeachingAssign(request);
 
             if (!result.IsSuccess)
             {
