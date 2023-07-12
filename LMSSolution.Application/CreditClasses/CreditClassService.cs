@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
+using LMSSolution.Utilities.Enums;
 using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.CreditClass;
 using Microsoft.EntityFrameworkCore;
@@ -26,18 +27,18 @@ namespace LMSSolution.Application.CreditClasses
             _mapper = config.CreateMapper();
         }
 
-        public async Task<ApiResult<bool>> Create(CreditClassCreateRequest request)
+        public async Task<ApiResult<CreditClassViewModel>> Create(CreditClassCreateRequest request)
         {
             var checkSubject = await _context.Subjects.FindAsync(request.SubjectId);
             if(checkSubject == null)
             {
-                return new ApiErrorResult<bool>("Môn học không tồn tại.");
+                return new ApiErrorResult<CreditClassViewModel>("Môn học không tồn tại.");
             }
 
             var checkExist = await _context.CreditClasses.FirstOrDefaultAsync(x => x.Name == request.Name);
             if(checkExist != null)
             {
-                return new ApiErrorResult<bool>("Lớp tín chỉ đã tồn tại.");
+                return new ApiErrorResult<CreditClassViewModel>("Lớp tín chỉ đã tồn tại.");
             }
 
             var numberOfLessions = checkSubject.NumberOfLesson;
@@ -50,6 +51,8 @@ namespace LMSSolution.Application.CreditClasses
 
             _mapper.Map(request, newCreditClass);
 
+            newCreditClass.TeachingAssign = TeachingAssignStatusEnum.Unassigned;
+
             try
             {
                 _context.CreditClasses.Add(newCreditClass);
@@ -57,10 +60,12 @@ namespace LMSSolution.Application.CreditClasses
             }
             catch (DbUpdateException)
             {
-                return new ApiErrorResult<bool>("Thêm mới thất bại");
+                return new ApiErrorResult<CreditClassViewModel>("Thêm mới thất bại");
             }
 
-            return new ApiSuccessResult<bool>();
+            var result = _mapper.Map(newCreditClass, new CreditClassViewModel());
+
+            return new ApiSuccessResult<CreditClassViewModel>(result);
         }
 
         public Task<ApiResult<bool>> Delete(int Id)
@@ -134,6 +139,8 @@ namespace LMSSolution.Application.CreditClasses
                 return new ApiErrorResult<bool>("Lớp tín chỉ không tồn tại");
             }
 
+            creditClass.TeachingAssign = TeachingAssignStatusEnum.Assigned;
+
             var lessons = new List<Lesson>();
 
             for (var date = creditClass.StartDate; date <= creditClass.EndDate; date = date.AddDays(7))
@@ -150,6 +157,7 @@ namespace LMSSolution.Application.CreditClasses
 
             try
             {
+                _context.CreditClasses.Update(creditClass);
                 await _context.Lessons.AddRangeAsync(lessons);
                 await _context.SaveChangesAsync();
             }

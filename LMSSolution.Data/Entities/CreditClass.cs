@@ -10,6 +10,7 @@ namespace LMSSolution.Data.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public CreditClassStatusEnum Status { get; set; }
+        public TeachingAssignStatusEnum TeachingAssign { get; set; }
 
         public int SubjectId { get; set; }
         public Subject Subject { get; set; }
