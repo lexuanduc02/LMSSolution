@@ -4,6 +4,7 @@ using LMSSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSSolution.Data.Migrations
 {
     [DbContext(typeof(LMSDbContext))]
-    partial class LMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230710142920_add_status_column_to_credit_class_table")]
+    partial class add_status_column_to_credit_class_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,9 +141,6 @@ namespace LMSSolution.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeachingAssign")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -522,7 +522,7 @@ namespace LMSSolution.Data.Migrations
                         {
                             Id = new Guid("d7d6ae65-8029-46c5-a006-f89d6d04fa8c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7395f0e-439a-4dc6-a147-58eef1fbe521",
+                            ConcurrencyStamp = "f40d63af-55a1-40e5-8908-bcbc4cc2bea3",
                             Dob = new DateTime(1993, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lms@hou.edu.vn",
                             EmailConfirmed = true,
@@ -532,7 +532,7 @@ namespace LMSSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "lms@hou.edu.vn",
                             NormalizedUserName = "hou_admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHCCq7K9/as+/WivfZYF4t+1ndp+4/ZpfnlBUDfqHP4A1+mWJC6GK7HRU4xVdAkPYg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELzy/6qtjbVVo5cVVWkzYLWVIFbHA7iOy3nDPhxqCHF5H9Q5VOFyeFWJHlZEpkFcSg==",
                             PhoneNumber = "024 3868 2321",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",

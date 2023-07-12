@@ -2,6 +2,7 @@ using FluentValidation.AspNetCore;
 using LMSSolution.Application.Auths;
 using LMSSolution.Application.Classes;
 using LMSSolution.Application.Courses;
+using LMSSolution.Application.CreditClasses;
 using LMSSolution.Application.Majors;
 using LMSSolution.Application.Subjects;
 using LMSSolution.Application.Systems.Users.Teachers;
@@ -127,6 +128,7 @@ builder.Services.AddTransient<IClassService, ClassService>();
 builder.Services.AddTransient<IMajorService, MajorService>();
 builder.Services.AddTransient<ISubjectService, SubjectService>();
 builder.Services.AddTransient<ITeacherService, TeacherService>();
+builder.Services.AddTransient<ICreditClassService, CreditClassService>();
 
 var app = builder.Build();
 
