@@ -90,7 +90,7 @@ namespace LMSSolution.Application.CreditClasses
             //filter by KeyWord
             if (!string.IsNullOrEmpty(request.KeyWord))
             {
-                query = query.Where(x => x.Name.Contains(request.KeyWord) || x.Name.Contains(request.KeyWord));
+                query = query.Where(x => x.Name.Contains(request.KeyWord));
             }
 
             if(request.StartDate != null)

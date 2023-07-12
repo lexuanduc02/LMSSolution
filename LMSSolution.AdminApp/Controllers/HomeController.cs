@@ -1,6 +1,7 @@
 ﻿using LMSSolution.AdminApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SmartBreadcrumbs.Attributes;
 using System.Diagnostics;
 
 namespace LMSSolution.AdminApp.Controllers

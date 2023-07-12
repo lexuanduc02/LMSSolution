@@ -5,6 +5,7 @@ using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.System.Teacher;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SmartBreadcrumbs.Attributes;
 
 namespace LMSSolution.AdminApp.Controllers
 {

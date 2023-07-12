@@ -4,6 +4,7 @@ using LMSSolution.ApiIntegration.Course;
 using LMSSolution.ViewModels.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SmartBreadcrumbs.Attributes;
 
 namespace LMSSolution.AdminApp.Controllers
 {
