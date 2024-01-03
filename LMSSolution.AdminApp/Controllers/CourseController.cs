@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Azure.Core;
-using LMSSolution.ApiIntegration.Course;
+﻿using LMSSolution.ApiIntegration.Course;
 using LMSSolution.ViewModels.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

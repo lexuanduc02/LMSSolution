@@ -1,22 +1,18 @@
-using FluentValidation.AspNetCore;
+using FluentValidation;
 using LMSSolution.ApiIntegration.Auth;
 using LMSSolution.ApiIntegration.Course;
 using LMSSolution.ApiIntegration.Major;
 using LMSSolution.ApiIntegration.Subject;
 using LMSSolution.ApiIntegration.System.Teacher;
-using LMSSolution.Application.Subjects;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
-    .AddFluentValidation(fv =>
-    {
-        fv.AutomaticValidationEnabled = true;
-        fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
-    });
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();  
 
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
