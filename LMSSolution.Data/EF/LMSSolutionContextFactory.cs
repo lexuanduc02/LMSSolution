@@ -21,7 +21,7 @@ namespace LMSSolution.Data.EF
             var connectionString = configuration.GetConnectionString("LMSDatabase");
 
             var optionsBuilder = new DbContextOptionsBuilder<LMSDbContext>();
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseNpgsql(connectionString);
 
             return new LMSDbContext(optionsBuilder.Options);
         }

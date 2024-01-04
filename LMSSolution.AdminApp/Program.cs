@@ -1,47 +1,46 @@
 using FluentValidation;
-using LMSSolution.ApiIntegration.Auth;
-using LMSSolution.ApiIntegration.Course;
-using LMSSolution.ApiIntegration.Major;
-using LMSSolution.ApiIntegration.Subject;
-using LMSSolution.ApiIntegration.System.Teacher;
+using LMSSolution.AdminApp.ModuleRegistrations;
 using LMSSolution.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", false, true)
+                        .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true, reloadOnChange: true)
+                        .Build();
+
+var services = builder.Services;
+
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+services.AddControllersWithViews();
 
-builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();  
+services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
 
-builder.Services.AddRazorPages()
+services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 
-builder.Services.AddHttpClient();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromSeconds(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+services.AddHttpClient();
+services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromSeconds(30);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
 
 //Declare DI
-builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddTransient<IAuthApiClient, AuthApiClient>();
-builder.Services.AddTransient<ICourseApiClient, CourseApiClient>();
-builder.Services.AddTransient<ISubjectApiClient, SubjectApiClient>();
-builder.Services.AddTransient<IMajorApiClient, MajorApiClient>();
-builder.Services.AddTransient<ITeacherApiClient, TeacherApiClient>();
+services.AddServiceCollection();
 
 //Add Authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Auth/Login/";
         options.AccessDeniedPath = "/Auth/AccessDenied/";
     });
 
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 
