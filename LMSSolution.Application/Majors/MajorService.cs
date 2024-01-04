@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using LMSSolution.Data.EF;
 using LMSSolution.Data.Entities;
 using LMSSolution.ViewModels.Common;

@@ -1,17 +1,10 @@
 ﻿using LMSSolution.ViewModels.Common;
 using LMSSolution.ViewModels.Course;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Bogus.Bson;
-using Azure.Core;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace LMSSolution.ApiIntegration.Course
 {
